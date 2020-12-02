@@ -2,6 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
+// Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
 // Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/style.css';
@@ -12,15 +15,17 @@ import Home from './pages/home';
 
 function App() {
   return (
-    <div className='App'>
-      <Router>
-        <Nav />
-        <Switch>
-          <Route exact path='/' component={Home} />
-        </Switch>
-        <Footer />
-      </Router>
-    </div>
+    <Provider store={store}>
+      <div className='App'>
+        <Router>
+          <Nav />
+          <Switch>
+            <Route exact path='/' component={Home} />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>
+    </Provider>
   );
 }
 

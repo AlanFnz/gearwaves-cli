@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from '../axios';
 // Components
 import ProductCard from "../components/ProductCard";
 import { Container, Row, Col } from 'reactstrap';
+// Redux
+import { connect } from 'react-redux';
+// Actions
+import { getProducts } from '../redux/actions/dataActions';
 
 const Home = () => {
+
+  useEffect(() => {
+      console.log('use effect')
+      getProducts();
+  }, [])
+
   return (
     <main className="main">
       <Container>
@@ -19,4 +30,8 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = state => ({
+  data: state.data,
+});
+
+export default connect(mapStateToProps, { getProducts })(Home);
