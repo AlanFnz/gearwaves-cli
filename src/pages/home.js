@@ -8,12 +8,12 @@ import { connect } from 'react-redux';
 // Actions
 import { getProducts } from '../redux/actions/dataActions';
 
-const Home = () => {
+const Home = (props) => {
 
   useEffect(() => {
       console.log('use effect')
-      getProducts();
-  }, [])
+      props.getProducts();
+  }, [props])
 
   return (
     <main className="main">
