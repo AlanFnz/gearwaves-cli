@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
   SET_PRODUCTS,
   SET_PRODUCT,
@@ -19,7 +20,7 @@ export default function (state = initialState, action) {
     case SET_PRODUCTS:
       return {
         ...state,
-        products: action.payload.products,
+        products: action.payload.data.data,
       };
     case SET_PRODUCT:
       return {

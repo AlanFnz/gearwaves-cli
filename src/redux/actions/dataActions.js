@@ -12,16 +12,16 @@ import axios from '../../axios';
 // Get all products
 export const getProducts = () => (dispatch) => {
   console.log('redux data action');
-  // axios
-  //   .get('/products')
-  //   .then((res) => {
-  //     dispatch({
-  //       type: SET_PRODUCTS,
-  //       payload: res.data,
-  //     });
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   });
+  axios
+    .get('/products')
+    .then((res) => {
+      dispatch({
+        type: SET_PRODUCTS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err)
+    });
 };
 

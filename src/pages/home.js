@@ -10,10 +10,12 @@ import { getProducts } from '../redux/actions/dataActions';
 
 const Home = (props) => {
 
+  const getProducts = props.getProducts;
+
   useEffect(() => {
       console.log('use effect')
-      props.getProducts();
-  }, [props])
+      getProducts();
+  }, [])
 
   return (
     <main className="main">
