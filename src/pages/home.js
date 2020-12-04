@@ -1,30 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from '../axios';
 // Components
 import ProductCard from "../components/ProductCard";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Spinner } from 'reactstrap';
 // Redux
 import { connect } from 'react-redux';
 // Actions
 import { getProducts } from '../redux/actions/dataActions';
 
-const Home = (props) => {
+const Home = props => {
 
-  const getProducts = props.getProducts;
+  const { getProducts, loading } = props;
 
   useEffect(() => {
-      console.log('use effect')
-      getProducts();
-  }, [])
+    async function fetchData() {
+      await getProducts();
+    }
+    fetchData();
+  }, [getProducts])
+
+  let productsMap = props.data.products.map((product) => (
+    <Col><ProductCard product={product} key={product._id} /></Col>
+  ));
+
+  let productsMarkup = !loading ? productsMap : <Spinner size='sm' type="grow" color="dark" />;
 
   return (
     <main className="main">
       <Container>
         <div className="card--container">
           <Row xs="1" md="2" lg="3">
-          <Col><ProductCard /></Col>
-          <Col><ProductCard /></Col>
-          <Col><ProductCard /></Col>
+          {productsMarkup}
           </Row>
         </div>
       </Container>

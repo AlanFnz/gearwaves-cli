@@ -1,7 +1,8 @@
 import React from 'react';
 import '../styles/ProductCard.css';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+  const { product } = props;
   return (
     <div className="card">
       <div className="card__header">
@@ -9,16 +10,16 @@ const ProductCard = () => {
           <div className="card__picture-overlay"> &nbsp</div>
           <img className="card__picture-img" src="#" alt="product name"/>
         </div>
-        <h3 className="heading-tertirary"><span>Product Name</span></h3>
+        <h3 className="heading-tertirary"><span>{product.name}</span></h3>
       </div>
       <div className="card__details">
-        <h4 className='card__sub-heading'>Sub heading 1</h4>
-        <p className="card__text">Product summary</p>
+        <h4 className='card__sub-heading'>Sub heading</h4>
+        <p className="card__text">{product.summary}</p>
         <div className="card__data">
           <svg className="card__icon">
             <use xlink href="img/icons.svg#icon-map-flag"></use>
           </svg>
-          <span>Made in</span>
+          <span>{`Made in`}</span>
         </div>
         <div className="card__data">
           <svg className="card__icon">

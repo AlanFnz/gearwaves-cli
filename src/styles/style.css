@@ -183,8 +183,8 @@ body {
 }
 .heading-primary span,
 .heading-tertirary span {
-  padding: 1rem 1.5rem;
-  line-height: 1;
+  padding: .75rem 1.5rem;
+  line-height: 1.5;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   background-image: -webkit-gradient(
@@ -209,7 +209,7 @@ body {
 }
 
 .heading-tertirary {
-  font-size: 2.75rem;
+  font-size: 1.75rem;
   text-align: right;
   position: absolute;
   bottom: 1rem;

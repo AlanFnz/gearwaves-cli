@@ -12,6 +12,7 @@ import axios from '../../axios';
 // Get all products
 export const getProducts = () => (dispatch) => {
   console.log('redux data action');
+  dispatch({ type: LOADING_DATA });
   axios
     .get('/products')
     .then((res) => {

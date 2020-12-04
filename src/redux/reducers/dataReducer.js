@@ -17,10 +17,16 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case LOADING_DATA:
+      return {
+        ...state,
+        loading: true,
+      };
     case SET_PRODUCTS:
       return {
         ...state,
         products: action.payload.data.data,
+        loading: false,
       };
     case SET_PRODUCT:
       return {
