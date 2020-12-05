@@ -30,12 +30,12 @@ const ProductCard = (props) => {
       </div>
       <div className="card__footer">
         <p>
-          <span className="card__footer-value">Price</span>
-          <span className="card__footer-text">Unit</span>
+          <span className="card__footer-value">{product.price}</span>
+          <span className="card__footer-text"> €</span>
         </p>
         <p className="card__ratings">
-          <span className="card__footer-value">Ratings Avg.</span>
-          <span className="card__footer-text">Rating</span>
+          <span className="card__footer-value">{`Rating: ${product.ratingsAverage}`}</span>
+          <span className="card__footer-text">{` (${product.ratingsQuantity})`}</span>
         </p>
         <a className="btn btn--green btn--small" href="https://google.com"> Details</a>
       </div>
