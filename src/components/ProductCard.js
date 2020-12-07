@@ -7,8 +7,8 @@ const ProductCard = (props) => {
     <div className="card">
       <div className="card__header">
         <div className="card__picture">
-          <div className="card__picture-overlay"> &nbsp</div>
-          <img className="card__picture-img" src="#" alt="product name"/>
+          <div className="card__picture-overlay"> &nbsp;</div>
+          <img className="card__picture-img" src={`http://localhost:8000/img/products/${product.imageCover}`} alt="product name"/>
         </div>
         <h3 className="heading-tertirary"><span>{product.name}</span></h3>
       </div>
@@ -19,13 +19,13 @@ const ProductCard = (props) => {
           <svg className="card__icon">
             <use xlink href="img/icons.svg#icon-map-flag"></use>
           </svg>
-          <span>{`Made in`}</span>
+          <span>{`Made in ${product.madeIn.description}`}</span>
         </div>
         <div className="card__data">
           <svg className="card__icon">
             <use xlink href="img/icons.svg#icon-map-pin"></use>
           </svg>
-          <span>Stores</span>
+          <span>{`${product.locations.length} Stores`}</span>
         </div>
       </div>
       <div className="card__footer">
