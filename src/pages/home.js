@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from '../axios';
+import React, { useEffect } from "react";
 // Components
 import ProductCard from "../components/ProductCard";
 import { Container, Row, Col, Spinner } from 'reactstrap';

@@ -31,7 +31,8 @@ export default function (state = initialState, action) {
     case SET_PRODUCT:
       return {
         ...state,
-        product: action.payload,
+        product: action.payload.data.data,
+        loading: false,
       };
     default:
       return state;

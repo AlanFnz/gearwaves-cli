@@ -12,6 +12,7 @@ import './styles/style.css';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './pages/home';
+import Product from './pages/product';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/products/:slug' component={Product} />
           </Switch>
           <Footer />
         </Router>
