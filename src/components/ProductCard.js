@@ -37,7 +37,7 @@ const ProductCard = (props) => {
           <span className="card__footer-value">{`Rating: ${product.ratingsAverage}`}</span>
           <span className="card__footer-text">{` (${product.ratingsQuantity})`}</span>
         </p>
-        <a className="btn btn--green btn--small" href="https://google.com"> Details</a>
+        <a className="btn btn--green btn--small" href={`/products/${product.slug}`}> Details</a>
       </div>
     </div>
   );

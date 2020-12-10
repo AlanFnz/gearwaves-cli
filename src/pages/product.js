@@ -2,18 +2,18 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Components
 import { Spinner } from 'reactstrap';
+import ReviewCard from '../components/ReviewCard';
 // Redux
 import { connect } from 'react-redux';
 // Actions
 import { getProduct } from '../redux/actions/dataActions';
 
 const Product = (props) => {
-  const [isLoading, setLoading] = useState(true);
+  const [ isLoading, setLoading ] = useState(true);
   const { getProduct, loading } = props;
   const { slug } = props.match.params;
 
   useEffect(() => {
-    console.log('fetching');
     setLoading(true);
     async function fetchData() {
       await getProduct(slug);
@@ -21,8 +21,6 @@ const Product = (props) => {
     }
     fetchData();
   }, [getProduct, slug]);
-
-  console.log(props);
 
   const overviewBox = (label, text, icon) => {
     return (
@@ -51,6 +49,15 @@ const Product = (props) => {
     ))
   );
 
+  const reviewsMarkup = isLoading ? (
+    <Spinner size="sm" type="grow" color="dark" />
+  ) : (
+    props.data.product.reviews &&
+    props.data.product.reviews.map((review, i) => (
+      <ReviewCard review={review} />
+    ))
+  );
+
   let splittedDescription = isLoading
     ? null
     : props.data.product.description &&
@@ -58,11 +65,31 @@ const Product = (props) => {
   let paragraphs = loading
     ? null
     : splittedDescription &&
-      splittedDescription.map((p, i) => <p className="description__text" key={uuidv4()}>{p}</p>);
+      splittedDescription.map((p, i) => (
+        <p className="description__text" key={uuidv4()}>
+          {p}
+        </p>
+      ));
 
-  let pageMarkup = !isLoading && !loading && props.data.product.images ? (
-    <Fragment>
-      <section className="section-header">
+  let splittedMadeIn =
+    props.data.product.madeIn &&
+    props.data.product.madeIn.description.split(',');
+  let madeIn = splittedMadeIn && splittedMadeIn[splittedMadeIn.length - 1];
+
+  let expertsMarkup =
+    props.data.product.experts &&
+    props.data.product.experts.map((expert) => (
+      <div className="overview-box__detail">
+        <img className="overview-box__img" src={`http://localhost:8000/img/users/${expert.photo}`} alt="Expert" />
+        <span>{expert.role === 'sales' ? (`Sales:`) : (`Technical:`)}&nbsp;</span>
+        <span>{expert.name}</span>
+      </div>
+    ));
+
+  let pageMarkup =
+    !isLoading && !loading && props.data.product.images ? (
+      <Fragment>
+        <section className="section-header">
           <div className="header__hero">
             <div className="header__hero-overlay">&nbsp;</div>
             <img
@@ -75,7 +102,7 @@ const Product = (props) => {
             <h1 className="heading-primary">
               <span>{props.data.product.name}</span>
             </h1>
-            <div className="heading-box__group">
+            {/* <div className="heading-box__group">
               <div className="heading-box__detail">
                 <svg className="heading-box__icon">
                   <use xlink href="img/icons.svg#icon-map-pin"></use>
@@ -91,7 +118,7 @@ const Product = (props) => {
                 </svg>
                 <span className="heading-box__text"> Made in</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
         <section className="section-description">
@@ -99,29 +126,28 @@ const Product = (props) => {
             <div>
               <div className="overview-box__group">
                 <h2 className="heading-secondary ma-bt-lg"> Quick facts</h2>
-                {overviewBox('Stock', props.data.product.stock, 'calendar')}
+                {overviewBox(
+                  'Stock',
+                  `${props.data.product.stock} units`,
+                  'calendar'
+                )}
                 {overviewBox(
                   'Warrantly',
-                  props.data.product.warrantly,
+                  `${props.data.product.warrantly} months`,
                   'trending-up'
                 )}
+                {overviewBox('Made In', madeIn, 'people')}
                 {overviewBox(
-                  'Made In',
-                  props.data.product.madeIn &&
-                    props.data.product.madeIn.description,
-                  'people'
+                  'Rating',
+                  `${props.data.product.ratingsAverage}/5`,
+                  'star'
                 )}
-                {overviewBox('Rating', props.data.product.ratingsAverage, 'star')}
               </div>
               <div className="overview-box__group">
                 <h2 className="heading-secondary ma-bt-lg">
                   Your experts assistants
                 </h2>
-                <div className="overview-box__detail">
-                  <img className="overview-box__img" src="/#" alt="Expert" />
-                  <span> Expert</span>
-                  <span> Expert name</span>
-                </div>
+                {expertsMarkup}
               </div>
             </div>
           </div>
@@ -135,9 +161,7 @@ const Product = (props) => {
           <p>Here goes the map with store locations</p>
         </section>
         <section className="section-reviews">
-          <div className="reviews">
-            <p>Here the reviews</p>
-          </div>
+          <div className="reviews">{reviewsMarkup}</div>
         </section>
         <section className="section-cta">
           <div className="cta">
@@ -170,8 +194,10 @@ const Product = (props) => {
             </div>
           </div>
         </section>
-    </Fragment>
-  ) : <Spinner size='sm' type="grow" color="dark" />
+      </Fragment>
+    ) : (
+      <Spinner size="sm" type="grow" color="dark" />
+    );
 
   return pageMarkup;
 };
