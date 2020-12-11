@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 // Components
 import { Spinner } from 'reactstrap';
 import ReviewCard from '../components/ReviewCard';
+import Mapbox from '../components/Mapbox';
 // Redux
 import { connect } from 'react-redux';
 // Actions
@@ -158,7 +159,7 @@ const Product = (props) => {
         </section>
         <section className="section-pictures">{imagesMarkup}</section>
         <section className="section-map">
-          <p>Here goes the map with store locations</p>
+          <Mapbox locations={props.data.product.locations} />
         </section>
         <section className="section-reviews">
           <div className="reviews">{reviewsMarkup}</div>
