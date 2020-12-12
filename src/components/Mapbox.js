@@ -17,13 +17,16 @@ const Mapbox = (props) => {
     });
 
     const bounds = new mapboxgl.LngLatBounds();
-    
+
     locations.forEach((loc) => {
-      new mapboxgl.Marker({ "color": "#b40219" })
+      // { "color": "#b40219" }
+      const marker = document.createElement('div');
+      marker.className = 'marker';
+      new mapboxgl.Marker({ element: marker, anchor: 'bottom'})
         .setLngLat(loc.coordinates)
         .addTo(map);
 
-      new mapboxgl.Popup({ offset: 30 })
+      new mapboxgl.Popup({ offset: 30, focusAfterOpen: false })
         .setLngLat(loc.coordinates)
         .setHTML(`<strong>${loc.name}</strong><br/><p>${loc.description}</p>`)
         .addTo(map);

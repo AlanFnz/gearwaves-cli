@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // Components
-import { Spinner } from 'reactstrap';
+import { Container, Row, Col, Spinner } from 'reactstrap';
 import ReviewCard from '../components/ReviewCard';
 import Mapbox from '../components/Mapbox';
 // Redux
@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { getProduct } from '../redux/actions/dataActions';
 
 const Product = (props) => {
-  const [ isLoading, setLoading ] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const { getProduct, loading } = props;
   const { slug } = props.match.params;
 
@@ -81,8 +81,12 @@ const Product = (props) => {
     props.data.product.experts &&
     props.data.product.experts.map((expert) => (
       <div className="overview-box__detail">
-        <img className="overview-box__img" src={`http://localhost:8000/img/users/${expert.photo}`} alt="Expert" />
-        <span>{expert.role === 'sales' ? (`Sales:`) : (`Technical:`)}&nbsp;</span>
+        <img
+          className="overview-box__img"
+          src={`http://localhost:8000/img/users/${expert.photo}`}
+          alt="Expert"
+        />
+        <span>{expert.role === 'sales' ? `Sales:` : `Technical:`}&nbsp;</span>
         <span>{expert.name}</span>
       </div>
     ));
@@ -100,7 +104,7 @@ const Product = (props) => {
             />
           </div>
           <div className="heading-box">
-            <h1 className="heading-primary">
+            <h1 className="heading-product heading-primary">
               <span>{props.data.product.name}</span>
             </h1>
             {/* <div className="heading-box__group">
@@ -122,41 +126,54 @@ const Product = (props) => {
             </div> */}
           </div>
         </section>
-        <section className="section-description">
-          <div className="overview-box">
-            <div>
-              <div className="overview-box__group">
-                <h2 className="heading-secondary ma-bt-lg"> Quick facts</h2>
-                {overviewBox(
-                  'Stock',
-                  `${props.data.product.stock} units`,
-                  'calendar'
-                )}
-                {overviewBox(
-                  'Warrantly',
-                  `${props.data.product.warrantly} months`,
-                  'trending-up'
-                )}
-                {overviewBox('Made In', madeIn, 'people')}
-                {overviewBox(
-                  'Rating',
-                  `${props.data.product.ratingsAverage}/5`,
-                  'star'
-                )}
-              </div>
-              <div className="overview-box__group">
-                <h2 className="heading-secondary ma-bt-lg">
-                  Your experts assistants
-                </h2>
-                {expertsMarkup}
-              </div>
-            </div>
-          </div>
-          <div className="description-box">
-            <h2 className="heading-secondary ma-bt-lg">About product</h2>
-            {paragraphs}
-          </div>
-        </section>
+        <Container>
+          <Row xs="1" md="2" className="section-description">
+            <section className="section-overview">
+              <Col>
+                <div className="overview-box">
+                  <div>
+                    <div className="overview-box__group">
+                      <h2 className="heading-secondary ma-bt-lg">
+                        {' '}
+                        Quick facts
+                      </h2>
+                      {overviewBox(
+                        'Stock',
+                        `${props.data.product.stock} units`,
+                        'calendar'
+                      )}
+                      {overviewBox(
+                        'Warrantly',
+                        `${props.data.product.warrantly} months`,
+                        'trending-up'
+                      )}
+                      {overviewBox('Made In', madeIn, 'people')}
+                      {overviewBox(
+                        'Rating',
+                        `${props.data.product.ratingsAverage}/5`,
+                        'star'
+                      )}
+                    </div>
+                    <div className="overview-box__group">
+                      <h2 className="heading-secondary ma-bt-lg">
+                        Your experts assistants
+                      </h2>
+                      {expertsMarkup}
+                    </div>
+                  </div>
+                </div>
+              </Col>
+            </section>
+            <section className="section-product-description">
+              <Col>
+                <div className="description-box">
+                  <h2 className="heading-secondary ma-bt-lg">About product</h2>
+                  {paragraphs}
+                </div>
+              </Col>
+            </section>
+          </Row>
+        </Container>
         <section className="section-pictures">{imagesMarkup}</section>
         <section className="section-map">
           <Mapbox locations={props.data.product.locations} />
@@ -166,33 +183,47 @@ const Product = (props) => {
         </section>
         <section className="section-cta">
           <div className="cta">
-            <div className="cta__img cta__img--logo">
-              <img
-                src="http://localhost:8000/img/logo-white-png"
-                alt="Gearwaves logo"
-              />
-            </div>
-            <img
-              className="cta__img cta__img--1"
-              src={`http://localhost:8000/img/products/${props.data.product.images[1]}`}
-              alt=""
-            />
-            <img
-              className="cta__img cta__img--2"
-              src={`http://localhost:8000/img/products/${props.data.product.images[2]}`}
-              alt=""
-            />
-            <div className="cta__content">
-              <h2 className="heading-secondary"> What are you waiting for?</h2>
-              <p className="cta__text">Such an amazing gear</p>
-              <button
-                className="btn btn--green span-all-rows"
-                id="purchase-product"
-                data-product-id={props.data.product._id}
-              >
-                Buy now!
-              </button>
-            </div>
+            <Container>
+              <Row xs="2" md="3">
+                <Col>
+                  <img
+                    className="cta__img cta__img--0"
+                    src={`http://localhost:8000/img/products/${props.data.product.images[0]}`}
+                    alt=""
+                  />
+                  <img
+                    className="cta__img cta__img--1"
+                    src={`http://localhost:8000/img/products/${props.data.product.images[1]}`}
+                    alt=""
+                  />
+                  <img
+                    className="cta__img cta__img--2"
+                    src={`http://localhost:8000/img/products/${props.data.product.images[2]}`}
+                    alt=""
+                  />
+                </Col>
+                <Col>
+                  <div className="cta__content">
+                    <h2 className="heading-secondary">
+                      {' '}
+                      What are you waiting for?
+                    </h2>
+                    <p className="cta__text">Such an amazing gear</p>
+                  </div>
+                </Col>
+                <Col>
+                  <div className="cta__content">
+                    <button
+                      className="btn btn--green span-all-rows"
+                      id="purchase-product"
+                      data-product-id={props.data.product._id}
+                    >
+                      Buy now!
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
           </div>
         </section>
       </Fragment>
