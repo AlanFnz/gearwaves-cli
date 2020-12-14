@@ -184,43 +184,22 @@ const Product = (props) => {
         <section className="section-cta">
           <div className="cta">
             <Container>
-              <Row xs="2" md="3">
-                <Col>
-                  <img
-                    className="cta__img cta__img--0"
-                    src={`http://localhost:8000/img/products/${props.data.product.images[0]}`}
-                    alt=""
-                  />
-                  <img
-                    className="cta__img cta__img--1"
-                    src={`http://localhost:8000/img/products/${props.data.product.images[1]}`}
-                    alt=""
-                  />
-                  <img
-                    className="cta__img cta__img--2"
-                    src={`http://localhost:8000/img/products/${props.data.product.images[2]}`}
-                    alt=""
-                  />
+              <Row xs="1" md="2">
+                <Col className="cta__content">
+                  <h2 className="heading-secondary cta__heading">
+                    {' '}
+                    What are you waiting for?
+                  </h2>
+                  <p className="cta__text">Get the sound you dreamed of</p>
                 </Col>
-                <Col>
-                  <div className="cta__content">
-                    <h2 className="heading-secondary">
-                      {' '}
-                      What are you waiting for?
-                    </h2>
-                    <p className="cta__text">Such an amazing gear</p>
-                  </div>
-                </Col>
-                <Col>
-                  <div className="cta__content">
-                    <button
-                      className="btn btn--green span-all-rows"
-                      id="purchase-product"
-                      data-product-id={props.data.product._id}
-                    >
-                      Buy now!
-                    </button>
-                  </div>
+                <Col className="cta__content">
+                  <button
+                    className="btn btn--green btn--buy span-all-rows"
+                    id="purchase-product"
+                    data-product-id={props.data.product._id}
+                  >
+                    Buy now!
+                  </button>
                 </Col>
               </Row>
             </Container>
