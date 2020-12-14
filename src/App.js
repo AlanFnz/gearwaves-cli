@@ -13,6 +13,7 @@ import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Home from './pages/home';
 import Product from './pages/product';
+import Login from './pages/login';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/products/:slug' component={Product} />
+            <Route exact path='/login' component={Login} />
           </Switch>
           <Footer />
         </Router>

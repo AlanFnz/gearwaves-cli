@@ -56,36 +56,6 @@ body {
   position: relative;
 }
 
-@media only screen and (max-width: 37.5em) {
-  .main {
-    padding: 3rem 3rem;
-  }
-  body {
-    padding: 1rem;
-  }
-}
-
-@media only screen and (max-width: 34em) {
-  .main {
-    padding: 2rem 1.5rem;
-  }
-}
-
-@media only screen and (max-width: 30em) {
-  .main {
-    padding: 2rem 0.5rem;
-  }
-  body {
-    padding: 0;
-  }
-}
-
-@media only screen and (max-width: 25em) {
-  .main {
-    padding: 1rem 0rem;
-  }
-}
-
 .flex {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -709,6 +679,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  text-align: center;
 }
 .cta__text {
   font-size: 1.9rem;
@@ -975,5 +946,44 @@ body {
   }
   .btn--buy {
     margin-top: 1rem;
+  }
+}
+
+@media only screen and (max-width: 37.5em) {
+  .main {
+    padding: 3rem 3rem;
+  }
+  body {
+    padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 34em) {
+  .main {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .main {
+    padding: 2rem 0.5rem;
+  }
+  body {
+    padding: 0;
+  }
+  .login-form {
+    padding: 3.5rem 3rem;
+  }
+}
+
+@media only screen and (max-width: 25em) {
+  .main {
+    padding: 1rem 0rem;
+  }
+  .login {
+    padding: 1rem 0.8rem;
+  }
+  .login-form {
+    padding: 2.5rem 2rem;
   }
 }
