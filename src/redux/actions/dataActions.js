@@ -1,10 +1,6 @@
 import { 
   SET_PRODUCTS,
   SET_PRODUCT, 
-  SET_ERRORS,
-  CLEAR_ERRORS,
-  CLEAR_SNIPPETS,
-  LOADING_UI, 
   LOADING_DATA 
 } from '../types';
 import axios from '../../axios';
@@ -27,7 +23,6 @@ export const getProducts = () => (dispatch) => {
 
 // Get one product
 export const getProduct = (slug) => (dispatch) => {
-  console.log('redux data action one product');
   dispatch({ type: LOADING_DATA });
   axios
     .get(`/products/view/${slug}`)

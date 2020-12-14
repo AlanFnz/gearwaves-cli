@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import '../styles/ProductCard.css';
 
 const ProductCard = (props) => {
@@ -37,7 +38,7 @@ const ProductCard = (props) => {
           <span className="card__footer-value">{`Rating: ${product.ratingsAverage}`}</span>
           <span className="card__footer-text">{` (${product.ratingsQuantity})`}</span>
         </p>
-        <a className="btn btn--green btn--small" href={`/products/${product.slug}`}> Details</a>
+        <Link className="btn btn--green btn--small" to={`/products/${product.slug}`}> Details</Link>
       </div>
     </div>
   );

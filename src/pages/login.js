@@ -5,11 +5,9 @@ import { showAlert } from '../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import {} from '../redux/actions/dataActions';
+import { setUser } from '../redux/actions/userActions';
 
 const Login = (props) => {
-  console.log(props);
-
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -37,6 +35,7 @@ const Login = (props) => {
       });
 
       if (res.data.status === 'success') {
+        props.setUser(res.data);
         showAlert('success', 'Logged in succesfully!');
         window.setTimeout(() => {
           props.history.push('/');
@@ -91,7 +90,7 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.data,
+  user: state.user,
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, { setUser })(Login);

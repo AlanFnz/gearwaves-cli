@@ -7,29 +7,13 @@
   align-items: center;
   text-align: center;
 }
-@media only screen and (max-width: 37.5em) {
-  .nav {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-  }
-}
+
 .nav--products {
   -webkit-box-flex: 0;
   -ms-flex: 0 1 40%;
   flex: 0 1 40%;
 }
-@media only screen and (max-width: 62.5em) {
-  .nav--products {
-    margin-bottom: 1.5rem;
-  }
-}
-@media only screen and (max-width: 37.5em) {
-  .nav--products {
-    margin-bottom: 0;
-  }
-}
+
 .nav--user {
   -webkit-box-flex: 0;
   -ms-flex: 0 1 40%;
@@ -67,29 +51,7 @@
   text-shadow: 0 0.7rem 1rem black;
 }
 .nav__el:not(:last-child) {
-  margin-right: 3rem;
-}
-
-@media only screen and (max-width: 40em) {
-  .nav__el--signup{
-    margin-right: 2rem;
-  }
-}
-
-@media only screen and (max-width: 37.5em) {
-  .nav__el:not(:last-child) {
-    margin-right: 0;
-    margin-bottom: 1.2rem;
-  }
-}
-
-@media only screen and (max-width: 35em) {
-  .nav__el,
-  .nav__el:link,
-  .nav__el:visited {
-    font-size: 1.5rem;
-    font-weight: 300;
-  }
+  margin-right: 1.4rem;
 }
 
 .nav__el:focus {
@@ -105,21 +67,7 @@
   -webkit-transform: translateY(-.5rem);
   transform: translateY(-.5rem);
 }
-@media only screen and (max-width: 35em) {
-  .nav__el--cta {
-    padding: .2rem .8rem;
-    -webkit-transform: translateY(-.3rem);
-    transform: translateY(-.3rem);
-  }
-}
 
-@media only screen and (max-width: 30em) {
-  .nav__el--cta {
-    padding: .1rem .5rem;
-    -webkit-transform: translateY(-.15rem);
-    transform: translateY(-.15rem);
-  }
-}
 .nav__el--cta:hover {
   background-color: #f7f7f7;
   color: #777;
@@ -133,15 +81,6 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-@media only screen and (max-width: 37.5em) {
-  .nav__search {
-    -webkit-box-ordinal-group: 0;
-    -ms-flex-order: -1;
-    order: -1;
-    margin-bottom: 1.2rem;
-  }
 }
 
 .nav__search-btn {
@@ -193,12 +132,6 @@
   border-radius: 50%;
   margin-right: 1rem;
 }
-@media only screen and (max-width: 45em) {
-  .nav__user-img {
-    height: 3rem;
-    width: 3rem;
-  }
-}
 
 .header {
   background-color: #444;
@@ -218,7 +151,18 @@
   text-align: center;
 }
 
+.header__logo img {
+  height: 3.5rem;
+}
+
 @media only screen and (max-width: 62.5em) {
+  .header__logo {
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
+    margin-bottom: 1.5rem;
+    height: 3rem;
+  }
   .header {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -226,13 +170,55 @@
     /* -ms-flex-direction: column; */
     /* flex-direction: column; */
   }
+  .nav--products {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 45em) {
+  .nav__user-img {
+    height: 3rem;
+    width: 3rem;
+  }
 }
 
 @media only screen and (max-width: 40em) {
+  .header__logo img{
+    height: 3rem;
+  }
   .header {
     padding: 2rem;
     padding-top: 3.5rem;
     height: 6rem;
+  }
+  .nav__el--signup{
+    margin-right: 2rem;
+  }
+
+}
+
+@media only screen and (max-width: 37.5em) {
+  .nav {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .nav__search {
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
+    margin-bottom: 1.2rem;
+  }
+  .nav__el:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 1.2rem;
+  }
+  .nav--products {
+    margin-bottom: 0;
+  }
+  .nav__user-img{
+    display: none;
   }
 }
 
@@ -242,28 +228,27 @@
     padding-top: 4.5rem;
     height: 4rem;
   }
-}
-
-.header__logo img {
-  height: 3.5rem;
-}
-@media only screen and (max-width: 62.5em) {
-  .header__logo {
-    -webkit-box-ordinal-group: 0;
-    -ms-flex-order: -1;
-    order: -1;
-    margin-bottom: 1.5rem;
-    height: 3rem;
-  }
-}
-@media only screen and (max-width: 40em) {
-  .header__logo img{
-    height: 3rem;
-  }
-}
-@media only screen and (max-width: 35em) {
   .header__logo img{
     height: 2.5rem;
+  }
+  .nav__el--cta {
+    padding: .2rem .8rem;
+    -webkit-transform: translateY(-.3rem);
+    transform: translateY(-.3rem);
+  }
+  .nav__el,
+  .nav__el:link,
+  .nav__el:visited {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+}
+
+@media only screen and (max-width: 30em) {
+  .nav__el--cta {
+    padding: .1rem .5rem;
+    -webkit-transform: translateY(-.15rem);
+    transform: translateY(-.15rem);
   }
 }
 
