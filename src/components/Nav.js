@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
-import { withRouter } from "react-router";
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import axios from '../axios';
 // Components
 import { showAlert } from '../util/alerts';
@@ -18,20 +19,17 @@ const Nav = props => {
   const { setUser } = props;
 
   useEffect(() => {
-    console.log('nav useffect');
     async function getUser() {
       try {
         const res = await axios({
           method: 'GET',
           url: '/users/logged',
         });
-        console.log(res);
         if (res.data.status === 'success') {
           setUser(res.data);
         };
       } catch (err) {
         console.log(err);
-        // showAlert('error', err.response.data.message);
       };
     }
     if(document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)) getUser();
@@ -65,10 +63,10 @@ const Nav = props => {
     ) : (
       <Row xs='2' className='nav__el--signup'>
         <Col>
-          <a className='nav__el' href='/login'>Log in</a>
+          <Link className='nav__el' to='/login'>Log in</Link>
         </Col>
         <Col>
-          <a className='nav__el nav__el--cta' href='/#'>Sign up</a>
+          <Link className='nav__el nav__el--cta' to='/signup'>Sign up</Link>
         </Col>
       </Row>
     );

@@ -7,10 +7,12 @@ import { connect } from 'react-redux';
 // Actions
 import { setUser } from '../redux/actions/userActions';
 
-const Login = (props) => {
+const Signup = (props) => {
   const [state, setState] = useState({
+    name: '',
     email: '',
     password: '',
+    passwordConfirm: '',
   });
 
   useEffect(() => {
@@ -25,36 +27,54 @@ const Login = (props) => {
     }));
   };
 
-  const login = async (event) => {
+  const signup = async (event) => {
     event.preventDefault();
-    const { email, password } = state;
+    const { name, email, password, passwordConfirm } = state;
     try {
       const res = await axios({
         method: 'POST',
-        url: '/users/login',
+        url: '/users/signup',
         data: {
+          name,
           email,
           password,
+          passwordConfirm,
         },
       });
 
       if (res.data.status === 'success') {
         props.setUser(res.data);
-        showAlert('success', 'Logged in succesfully!');
+        showAlert('success', 'Account created succesfully!');
         window.setTimeout(() => {
           props.history.push('/');
         }, 1500);
-      };
+      }
     } catch (err) {
       showAlert('error', err.response.data.message);
-    };
+    }
   };
 
   return (
     <main className="main login">
       <div className="login-form">
-        <h2 className="heading-secondary ma-bt-lg">Log into your account</h2>
+        <h2 className="heading-secondary ma-bt-lg">Create your account</h2>
         <form className="form__group">
+          <label className="form__label" htmlFor="name">
+            Name
+          </label>
+          <input
+            className="form__input"
+            id="name"
+            type="name"
+            placeholder="John Doe"
+            value={state.name}
+            onChange={handleChange}
+            required
+            minLength="3"
+            maxLength="40"
+          />
+        </form>
+        <form className="form__group ma-bt-md">
           <label className="form__label" htmlFor="email">
             Email address
           </label>
@@ -83,9 +103,24 @@ const Login = (props) => {
             minLength="8"
           />
         </form>
+        <form className="form__group ma-bt-md">
+          <label className="form__label" htmlFor="passwordConfirm">
+            Confirm your password
+          </label>
+          <input
+            className="form__input"
+            id="passwordConfirm"
+            type="password"
+            placeholder="••••••••"
+            value={state.passwordConfirm}
+            onChange={handleChange}
+            required
+            minLength="8"
+          />
+        </form>
         <form className="form__group">
-          <button className="btn btn--green" onClick={login}>
-            Login
+          <button className="btn btn--green" onClick={signup}>
+            Sign up
           </button>
         </form>
       </div>
@@ -97,4 +132,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { setUser })(Login);
+export default connect(mapStateToProps, { setUser })(Signup);
