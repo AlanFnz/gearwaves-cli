@@ -1,6 +1,7 @@
 import React from 'react';
+// Styles
 import '../styles/ReviewCard.css';
-import '../styles/style.css';
+// Icons
 import starEmpty from '../img/star-empty.svg'
 import starFull from '../img/star-full.svg'
 

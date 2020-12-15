@@ -55,10 +55,10 @@ const Nav = props => {
     authenticated ? ( 
       <Fragment>
         <a className='nav__el' href="/#" onClick={logout}>Logout</a>
-        <a className='nav__el' href='/me'>
+        <Link className='nav__el' to='/account'>
           <img className='nav__user-img' src={`http://localhost:8000/img/users/${credentials.photo}`} alt='User' />
           <span className='d-none d-md-block'>{userName}</span>
-        </a>
+        </Link>
       </Fragment>
     ) : (
       <Row xs='2' className='nav__el--signup'>
@@ -77,7 +77,7 @@ const Nav = props => {
         <Row xs='2' sm='3'>
           <Col className='d-none d-sm-block'>
             <nav className='nav nav--products'>
-              <a className='nav__el' href='/'>ALL PRODUCTS</a>
+              <Link className='nav__el' to='/'>ALL PRODUCTS</Link>
             </nav>
           </Col>
           <Col>

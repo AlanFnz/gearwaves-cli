@@ -15,6 +15,7 @@ import Home from './pages/home';
 import Product from './pages/product';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import Account from './pages/account';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route exact path='/products/:slug' component={Product} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
+            <Route exact path='/account' component={Account} />
           </Switch>
           <Footer />
         </Router>

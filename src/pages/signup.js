@@ -65,7 +65,7 @@ const Signup = (props) => {
           <input
             className="form__input"
             id="name"
-            type="name"
+            type="text"
             placeholder="John Doe"
             value={state.name}
             onChange={handleChange}
