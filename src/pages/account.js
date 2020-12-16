@@ -2,33 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // Components
 import { Container, Row, Col, Spinner } from 'reactstrap';
+import UserProfile from '../components/UserProfile';
 // Redux
 import { connect } from 'react-redux';
-// Actions
-import { getProducts } from '../redux/actions/dataActions';
 // Icons
 import settings from '../img/settings.svg'
 import briefcase from '../img/briefcase.svg'
-import starFull from '../img/star-full.svg'
+import starFull from '../img/star-full-white.svg'
 import creditCard from '../img/credit-card.svg'
 import map from '../img/map.svg'
 import users from '../img/users.svg'
 
 const Account = (props) => {
   const [state, setState] = useState({
-    name: '',
-    email: '',
-    photo: '',
-    password: '',
-    passwordConfirm: '',
+    activeSection: 'settings'
   });
 
-  useEffect(() => {}, []);
+  const handleSection = (section) => {
+    setState({ activeSection: section})
+  }
+
+  useEffect(() => {
+    if (props.user.authenticated && props.user.authenticated === 'false') props.history.push('/');
+    if (props.match.params.section) handleSection(props.match.params.section);
+
+  }, [props.history, props.user.authenticated, props.match.params.section]);
 
   const navItem = (link, text, icon, active) => (
     <li className={`${active ? `side-nav--active` : ''}`}>
       <Link to={link}>
-        <img src={icon} alt='Nav Icon' />
+        <img className="nav__icon" src={icon} alt='Nav Icon' />
         {text}
       </Link>
     </li>
@@ -46,61 +49,32 @@ const Account = (props) => {
     </div>
   ) : null;
 
+  const pageRender = (section) => {
+    switch (section) {
+    case 'settings':
+      return <UserProfile />
+    case 'myGear':
+      return null
+    case 'myReviews':
+      return null
+    default:
+      return <UserProfile />
+    };
+  };
+
   return (
     <main className="main">
       <div className="user-view">
         <nav className="user-view__menu">
           <ul className="side-nav">
-            {navItem('#', 'Settings', settings, true)}
-            {navItem('/my-tours', 'My Gear', briefcase)}
-            {navItem('#', 'My reviews', starFull)}
-            {navItem('#', 'Billing', creditCard)}
+            {navItem('/account/settings', 'Settings', settings, state.activeSection === 'settings' ? true : false)}
+            {navItem('/account/myGear', 'My Gear', briefcase, state.activeSection === 'myGear' ? true : false)}
+            {navItem('/account/myReviews', 'My reviews', starFull, state.activeSection === 'myReviews' ? true : false)}
           </ul>
           {adminNav}
         </nav>
         <div className="user-view__content">
-          <div className="user-view__form-container">
-            <h2 className="heading-secondary ma-bt-md">Your account settings</h2>
-            <form className="form form-user-data">
-              <div className="form__group">
-                <label className="form__label" forHtml="name">Name</label>
-                <input id="name" className="form__input" type="text" value={state.name} required name="name" />
-              </div>
-              <div className="form__group ma-bt-md">
-                <label className="form__label" forHtml="email">Email address</label>
-                <input id="email" className="form__input" type="email" value={state.email} required name="email" />
-              </div>
-              <div className="form__group form__photo-upload">
-                <img className="form__user-photo" src={`http://localhost:8000/img/users/${props.user.credentials.photo}`} alt='User profile'/>
-                <input id="photo" className="form__upload" type="file" accept="image/*" name="photo" />
-                <label forHtml="photo">Choose new photo</label>
-              </div>
-              <div className="form__group right">
-                <button className="btn btn--small btn--green">Save settings</button>
-              </div>
-            </form>
-          </div>
-          <div className="line">&nbsp;</div>
-          <div className="user-view__form-container">
-            <h2 className="heading-secondary ma-bt-md">Password change</h2>
-            <form className="form form-user-password">
-              <div className="form__group">
-                <label className="form__label" forHtml="password-current">Current password</label>
-                <input id="password-current" className="form__input" type="password" placeholder="••••••••" minLength="8" required />
-              </div>
-              <div className="form__group">
-                <label className="form__label" forHtml="password">New password</label>
-                <input id="password" className="form__input" type="password" placeholder="••••••••" minLength="8" required />
-              </div>
-              <div className="form__group ma-bt-lg">
-                <label className="form__label" forHtml="password-confirm">Confirm password</label>
-                <input id="password-confirm" className="form__input" type="password" placeholder="••••••••" minLength="8" required />
-              </div>
-              <div className="form__group right">
-                <button className="btn btn--small btn--green btn--save-password">Save password</button>
-              </div>
-            </form>
-          </div>
+          {pageRender(state.activeSection)}
         </div>
       </div>
     </main>
@@ -111,4 +85,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getProducts })(Account);
+export default connect(mapStateToProps)(Account);

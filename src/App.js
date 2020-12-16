@@ -29,6 +29,8 @@ function App() {
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
             <Route exact path='/account' component={Account} />
+            <Route exact path='/account/:section' component={Account} />
+
           </Switch>
           <Footer />
         </Router>
