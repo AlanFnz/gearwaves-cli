@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
     case LOADING_USER:
       return {
         ...state,
-        loading: true
+        loading: action.payload
       };
     default:
       return state;

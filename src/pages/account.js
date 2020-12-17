@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import settings from '../img/settings.svg'
 import briefcase from '../img/briefcase.svg'
 import starFull from '../img/star-full-white.svg'
-import creditCard from '../img/credit-card.svg'
 import map from '../img/map.svg'
 import users from '../img/users.svg'
 
@@ -22,11 +21,12 @@ const Account = (props) => {
     setState({ activeSection: section})
   }
 
-  useEffect(() => {
-    if (props.user.authenticated && props.user.authenticated === 'false') props.history.push('/');
-    if (props.match.params.section) handleSection(props.match.params.section);
+  const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)
 
-  }, [props.history, props.user.authenticated, props.match.params.section]);
+  useEffect(() => {
+    !haveToken && !props.user.authenticated && props.history.push('/');
+    props.match.params.section && handleSection(props.match.params.section);
+  }, [props.history, props.user.authenticated, props.match.params.section, haveToken]);
 
   const navItem = (link, text, icon, active) => (
     <li className={`${active ? `side-nav--active` : ''}`}>

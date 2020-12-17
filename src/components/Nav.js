@@ -9,16 +9,17 @@ import { Container, Row, Col } from 'reactstrap';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { setUser, logoutUser, getUserData } from '../redux/actions/userActions';
+import { setUser, logoutUser, getUserData, loadingUser } from '../redux/actions/userActions';
 // Styles
 import '../styles/Nav.css';
 
 const Nav = props => {
   const { authenticated, credentials } = props.user;
   const userName = authenticated && credentials.name && credentials.name.split(' ')[0]
-  const { setUser } = props;
+  const { setUser, loadingUser } = props;
 
   useEffect(() => {
+    loadingUser(true);
     async function getUser() {
       try {
         const res = await axios({
@@ -29,11 +30,14 @@ const Nav = props => {
           setUser(res.data);
         };
       } catch (err) {
+        loadingUser(false);
         console.log(err);
       };
     }
-    if(document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)) getUser();
-  }, [setUser])
+    if(document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)) {
+      getUser()
+    } else { loadingUser(false) }
+  }, [setUser, loadingUser])
 
   const logout = async (event) => {
     event.preventDefault();
@@ -100,4 +104,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default withRouter(connect(mapStateToProps, { setUser, logoutUser, getUserData })(Nav));
+export default withRouter(connect(mapStateToProps, { setUser, logoutUser, getUserData, loadingUser })(Nav));

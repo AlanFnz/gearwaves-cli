@@ -8,6 +8,14 @@ import {
 } from '../types';
 import axios from '../../axios';
 
+// Set loading user
+export const loadingUser = (condition) => (dispatch) => {
+  dispatch({
+    type: LOADING_USER,
+    payload: condition,
+  });
+};
+
 // Set user
 export const setUser = (userData) => (dispatch) => {
   dispatch({ 
@@ -71,4 +79,5 @@ export const editUserDetails = userDetails => dispatch => {
     })
     .catch(err => console.log(err));
 };
+
 
