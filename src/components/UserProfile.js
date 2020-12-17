@@ -43,6 +43,10 @@ const UserProfile = (props) => {
     });
   };
 
+  const emptyPassword = () => {
+    setState({ passwordCurrent: '', password: '', passwordConfirm: '' })
+  }
+
   const saveSettings = async (event) => {
     event.preventDefault();
     const { name, email, photo } = state;
@@ -83,13 +87,14 @@ const UserProfile = (props) => {
         }
       });
       if (res.data.status === 'success') {
-        setState({ passwordCurrent: '', password: '', passwordConfirm: '' })
+        emptyPassword();
         showAlert('success', `Password updated successfully`);
         window.setTimeout(() => {
           props.history.push('/account');
         }, 1000);
       }
     } catch (err) {
+      emptyPassword();
       showAlert('error', err.response.data.message);
     }
   };

@@ -13,6 +13,7 @@ const initialState = {
   products: [],
   product: {},
   loading: false,
+  fetched: false,
 };
 
 export default function (state = initialState, action) {
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
         ...state,
         products: action.payload.data.data,
         loading: false,
+        fetched: true,
       };
     case SET_PRODUCT:
       return {
