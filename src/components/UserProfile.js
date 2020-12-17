@@ -14,9 +14,9 @@ const UserProfile = (props) => {
   const [state, setState] = useState({
     name: '',
     email: '',
-    photo: '',
-    currentPassword: '',
-    newPassword: '',
+    photo: null,
+    passwordCurrent: '',
+    password: '',
     passwordConfirm: '',
   });
 
@@ -24,13 +24,11 @@ const UserProfile = (props) => {
     setState({
       name: props.user.credentials.name,
       email: props.user.credentials.email,
-      photo: null,
     });
   }, [props.user.credentials]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    console.log(id, value);
     setState((prevState) => ({
       ...prevState,
       [id]: value,
@@ -47,7 +45,6 @@ const UserProfile = (props) => {
 
   const saveSettings = async (event) => {
     event.preventDefault();
-    console.log(state);
     const { name, email, photo } = state;
     const data = new FormData();
     data.append('name', name);
@@ -63,6 +60,31 @@ const UserProfile = (props) => {
       if (res.data.status === 'success') {
         props.setUser(res.data);
         showAlert('success', `Settings updated successfully`);
+        window.setTimeout(() => {
+          props.history.push('/account');
+        }, 1000);
+      }
+    } catch (err) {
+      showAlert('error', err.response.data.message);
+    }
+  };
+
+  const savePassword = async (event) => {
+    event.preventDefault();
+    const { passwordCurrent, password, passwordConfirm } = state;
+    try {
+      const res = await axios({
+        method: 'PATCH',
+        url: `/users/updateMyPassword`,
+        data: {
+          passwordCurrent,
+          password,
+          passwordConfirm
+        }
+      });
+      if (res.data.status === 'success') {
+        setState({ passwordCurrent: '', password: '', passwordConfirm: '' })
+        showAlert('success', `Password updated successfully`);
         window.setTimeout(() => {
           props.history.push('/account');
         }, 1000);
@@ -110,8 +132,8 @@ const UserProfile = (props) => {
               className="form__user-photo"
               src={
                 props.user.credentials.photo
-                  ? `http://localhost:8000/img/users/${props.user.credentials.photo}`
-                  : 'http://localhost:8000/img/users/default.jpg'
+                  ? `${process.env.REACT_APP_API_URL}/img/users/${props.user.credentials.photo}`
+                  : `${process.env.REACT_APP_API_URL}/img/users/default.jpg`
               }
               alt="User profile"
             />
@@ -135,16 +157,18 @@ const UserProfile = (props) => {
         <h2 className="heading-secondary ma-bt-md">Password change</h2>
         <form className="form form-user-password">
           <div className="form__group">
-            <label className="form__label" htmlFor="password-current">
+            <label className="form__label" htmlFor="passwordCurrent">
               Current password
             </label>
             <input
-              id="password-current"
+              id="passwordCurrent"
               className="form__input"
               type="password"
               placeholder="••••••••"
               minLength="8"
               required
+              onChange={handleChange}
+              value={state.passwordCurrent}
             />
           </div>
           <div className="form__group">
@@ -158,23 +182,27 @@ const UserProfile = (props) => {
               placeholder="••••••••"
               minLength="8"
               required
+              onChange={handleChange}
+              value={state.password}
             />
           </div>
           <div className="form__group ma-bt-lg">
-            <label className="form__label" htmlFor="password-confirm">
+            <label className="form__label" htmlFor="passwordConfirm">
               Confirm password
             </label>
             <input
-              id="password-confirm"
+              id="passwordConfirm"
               className="form__input"
               type="password"
               placeholder="••••••••"
               minLength="8"
               required
+              onChange={handleChange}
+              value={state.passwordConfirm}
             />
           </div>
           <div className="form__group right">
-            <button className="btn btn--small btn--green btn--save-password">
+            <button className="btn btn--small btn--green btn--save-password" onClick={savePassword}>
               Save password
             </button>
           </div>

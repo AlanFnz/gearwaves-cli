@@ -16,7 +16,7 @@ const ReviewCard = (props) => {
   return (
     <div className="reviews__card">
       <div className="reviews__avatar">
-        <img className="reviews__avatar-img" src={`http://localhost:8000/img/users/${review.user.photo}`} alt={`${review.user.name}`} />
+        <img className="reviews__avatar-img" src={`${process.env.REACT_APP_API_URL}/img/users/${review.user.photo}`} alt={`${review.user.name}`} />
         <h6 className="reviews__user">{review.user.name}</h6>
       </div>
       <p className="reviews__text">{review.review}</p>

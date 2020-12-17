@@ -60,7 +60,7 @@ const Nav = props => {
       <Fragment>
         <a className='nav__el' href="/#" onClick={logout}>Logout</a>
         <Link className='nav__el' to='/account'>
-          <img className='nav__user-img' src={`http://localhost:8000/img/users/${credentials.photo}`} alt='User' />
+          <img className='nav__user-img' src={`${process.env.REACT_APP_API_URL}/img/users/${credentials.photo}`} alt='User' />
           <span className='d-none d-md-block'>{userName}</span>
         </Link>
       </Fragment>

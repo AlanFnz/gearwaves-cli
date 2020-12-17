@@ -43,7 +43,7 @@ const Product = (props) => {
       <div className="picture-box" key={uuidv4()}>
         <img
           className={`picture-box__img picture-box__img--${i + 1}`}
-          src={`http://localhost:8000/img/products/${image}`}
+          src={`${process.env.REACT_APP_API_URL}/img/products/${image}`}
           alt={props.data.product.name}
         />
       </div>
@@ -83,7 +83,7 @@ const Product = (props) => {
       <div className="overview-box__detail">
         <img
           className="overview-box__img"
-          src={`http://localhost:8000/img/users/${expert.photo}`}
+          src={`${process.env.REACT_APP_API_URL}/img/users/${expert.photo}`}
           alt="Expert"
         />
         <span>{expert.role === 'sales' ? `Sales:` : `Technical:`}&nbsp;</span>
@@ -99,7 +99,7 @@ const Product = (props) => {
             <div className="header__hero-overlay">&nbsp;</div>
             <img
               className="header__hero-img"
-              src={`http://localhost:8000/img/products/${props.data.product.imageCover}`}
+              src={`${process.env.REACT_APP_API_URL}/img/products/${props.data.product.imageCover}`}
               alt="cover"
             />
           </div>
