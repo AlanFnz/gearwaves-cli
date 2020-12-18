@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 // Components
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import UserProfile from '../components/UserProfile';
+import MyGear from '../components/MyGear';
 // Redux
 import { connect } from 'react-redux';
 // Icons
@@ -41,7 +42,7 @@ const Account = (props) => {
     <div className="admin-nav">
       <h5 className="admin-nav__heading">Admin</h5>
       <ul className="side-nav">
-      {navItem('#', 'Manage stores', map)}
+      {navItem('#', 'Manage products', map)}
       {navItem('#', 'Manage users', users)}
       {navItem('#', 'Manage reviews', starFull)}
       {navItem('#', 'Manage booking', briefcase)}
@@ -54,7 +55,7 @@ const Account = (props) => {
     case 'settings':
       return <UserProfile />
     case 'myGear':
-      return null
+      return <MyGear />
     case 'myReviews':
       return null
     default:

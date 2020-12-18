@@ -14,7 +14,6 @@ const ProductCard = (props) => {
         <h3 className="heading-tertirary"><span>{product.name}</span></h3>
       </div>
       <div className="card__details">
-        <h4 className='card__sub-heading'>Sub heading</h4>
         <p className="card__text">{product.summary}</p>
         <div className="card__data">
           <svg className="card__icon">
