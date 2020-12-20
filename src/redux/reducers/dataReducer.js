@@ -2,6 +2,8 @@
 import {
   SET_PRODUCTS,
   SET_PRODUCT,
+  SET_GEAR,
+  SET_REVIEWS,
   SET_ERRORS,
   CLEAR_ERRORS,
   CLEAR_SNIPPETS,
@@ -12,6 +14,8 @@ import {
 const initialState = {
   products: [],
   product: {},
+  gear: [],
+  reviews: [],
   loading: false,
   fetched: false,
 };
@@ -36,7 +40,19 @@ export default function (state = initialState, action) {
         product: action.payload.data.data,
         loading: false,
       };
+    case SET_GEAR:
+      return {
+        ...state,
+        gear: action.payload.data.data,
+        loading: false,
+      };
+    case SET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload.data.data,
+        loading: false,
+      };
     default:
       return state;
-  };
-};
+  }
+}

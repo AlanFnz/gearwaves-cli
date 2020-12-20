@@ -20,12 +20,13 @@ const UserProfile = (props) => {
     passwordConfirm: '',
   });
 
-  useEffect(() => {
-    setState({
-      name: props.user.credentials.name,
-      email: props.user.credentials.email,
-    });
-  }, [props.user.credentials]);
+    useEffect(() => {
+      if (!state.name && props.user.credentials.name) setState(prevState => ({
+        ...prevState,
+        name: props.user.credentials.name,
+        email: props.user.credentials.email,
+      }));
+    }, [props.user.credentials.name, props.user.credentials.email, state.name, props.user.loading]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;

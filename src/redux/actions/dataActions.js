@@ -1,7 +1,9 @@
-import { 
+import {
   SET_PRODUCTS,
-  SET_PRODUCT, 
-  LOADING_DATA 
+  SET_PRODUCT,
+  SET_GEAR,
+  SET_REVIEWS,
+  LOADING_DATA,
 } from '../types';
 import axios from '../../axios';
 
@@ -17,7 +19,7 @@ export const getProducts = () => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     });
 };
 
@@ -33,7 +35,33 @@ export const getProduct = (slug) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
     });
 };
 
+// Get reviews or purchases by user
+export const getByUser = (userId, item) => (dispatch) => {
+  let type;
+  if (!item) return;
+  if (item === 'purchases') {
+    type = SET_GEAR;
+  } else {
+    type = SET_REVIEWS;
+  }
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/users/${item}`, {
+      params: {
+        user: userId,
+      },
+    })
+    .then((res) => {
+      dispatch({
+        type: type,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

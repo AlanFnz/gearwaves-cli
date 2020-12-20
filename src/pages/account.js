@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import UserProfile from '../components/UserProfile';
 import MyGear from '../components/MyGear';
+import MyReviews from '../components/MyReviews';
 // Redux
 import { connect } from 'react-redux';
 // Icons
@@ -14,20 +15,12 @@ import map from '../img/map.svg'
 import users from '../img/users.svg'
 
 const Account = (props) => {
-  const [state, setState] = useState({
-    activeSection: 'settings'
-  });
-
-  const handleSection = (section) => {
-    setState({ activeSection: section})
-  }
 
   const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)
 
   useEffect(() => {
     !haveToken && !props.user.authenticated && props.history.push('/');
-    props.match.params.section && handleSection(props.match.params.section);
-  }, [props.history, props.user.authenticated, props.match.params.section, haveToken]);
+  }, [props.history, props.user.authenticated, haveToken]);
 
   const navItem = (link, text, icon, active) => (
     <li className={`${active ? `side-nav--active` : ''}`}>
@@ -50,14 +43,14 @@ const Account = (props) => {
     </div>
   ) : null;
 
-  const pageRender = (section) => {
-    switch (section) {
+  const pageRender = () => {
+    switch (props.match.params.section) {
     case 'settings':
       return <UserProfile />
     case 'myGear':
       return <MyGear />
     case 'myReviews':
-      return null
+      return <MyReviews />
     default:
       return <UserProfile />
     };
@@ -68,14 +61,15 @@ const Account = (props) => {
       <div className="user-view">
         <nav className="user-view__menu">
           <ul className="side-nav">
-            {navItem('/account/settings', 'Settings', settings, state.activeSection === 'settings' ? true : false)}
-            {navItem('/account/myGear', 'My Gear', briefcase, state.activeSection === 'myGear' ? true : false)}
-            {navItem('/account/myReviews', 'My reviews', starFull, state.activeSection === 'myReviews' ? true : false)}
+            {navItem('/account/settings', 'Settings', settings, props.match.params.section === 'settings' ? true : !props.match.params.section ? true : false)}
+            {navItem('/account/myGear', 'My Gear', briefcase, props.match.params.section === 'myGear' ? true : false)}
+            {navItem('/account/myReviews', 'My reviews', starFull, props.match.params.section === 'myReviews' ? true : false)}
           </ul>
           {adminNav}
         </nav>
         <div className="user-view__content">
-          {pageRender(state.activeSection)}
+          {/* {pageRender(state.activeSection)} */}
+          {pageRender()}
         </div>
       </div>
     </main>
