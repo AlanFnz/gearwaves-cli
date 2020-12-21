@@ -98,3 +98,25 @@
 .reviews__star--inactive {
   fill: #bbb;
 }
+
+@media only screen and (max-width: 60em) and (min-width: 767px) {
+  .reviews__card-user {
+    width: 20rem;
+    padding: 2.5rem;
+  }
+  .reviews__edit-position {
+    bottom: 3.8rem;
+    left: 6rem;
+  }
+}
+
+@media only screen and (max-width: 26em) {
+  .reviews__card-user {
+    width: 24rem;
+    padding: 2.5rem;
+  }
+  .reviews__edit-position {
+    bottom: 3.8rem;
+    left: 9rem;
+  }
+}

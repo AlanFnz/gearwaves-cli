@@ -44,7 +44,7 @@ const MyReviews = (props) => {
 
   let markup;
   if (props.data.loading) {
-    markup = <Spinner size="md" color="dark" />;
+    markup = <div className="user-view__form-container"><Spinner size="md" color="dark" /></div>;
   } else if (props.data.reviews.length <= 0) {
     markup = noReviewsMarkup;
   } else {

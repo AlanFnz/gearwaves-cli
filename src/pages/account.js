@@ -57,7 +57,7 @@ const Account = (props) => {
   };
 
   return (
-    <main className="main">
+    <main className="main main-account">
       <Container className="user-view">
         <Row className="user-view__row">
           <Col md="3" xs="12" className="user-view__menu">

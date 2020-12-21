@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 // Styles
 import '../styles/ReviewCard.css';
 // Components
@@ -12,9 +12,30 @@ import { connect } from 'react-redux';
 
 const ReviewCard = (props) => {
   const { review } = props;
-  const [modal, setModal] = useState(false);
+  const [state, setState] = useState({
+    modal: false,
+    review: '',
+    rating: '',
+  });
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => setState({ modal: !state.modal });
+
+  useEffect(() => {
+    if (!state.review && props.review.review)
+      setState((prevState) => ({
+        ...prevState,
+        review: props.review.review,
+        rating: props.review.rating,
+      }));
+  }, [props.review.rating, props.review.review, state.review]);
+
+  const handleChange = (event) => {
+    const { id, value } = event.target;
+    setState((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
 
   const array = [1, 2, 3, 4, 5];
   let starsMarkup = array.map((star) =>
@@ -29,29 +50,56 @@ const ReviewCard = (props) => {
     review.user._id === props.user.credentials._id && props.edit ? (
       <div className="reviews__edit-position">
         <div className="reviews__edit-container" onClick={toggle}>
-          <img src={edit} alt="Edit" className="reviews__edit"  />
+          <img src={edit} alt="Edit" className="reviews__edit" />
         </div>
       </div>
     ) : null;
 
+  let ratingOptions = () => {
+    const values = [1, 2, 3, 4, 5];
+    return values.map(value => {
+      return  <option value={value} onChange={handleChange}>{value}</option>
+    })
+  }
+    
   let reviewEditMarkup = (
     <div>
-      <Modal isOpen={modal} toggle={toggle} centered={true}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+      <Modal isOpen={state.modal} toggle={toggle} centered={true}>
+        <ModalHeader toggle={toggle}>{review.product.name}</ModalHeader>
         <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          <div className="form__group">
+            <label className="form__label" htmlFor="name">
+              Review
+            </label>
+            <textarea
+              id="review"
+              className="form__input form__input-textarea"
+              type="text"
+              value={state.review}
+              required
+              name="name"
+              maxLength={160}
+              minLength={10}
+              onChange={handleChange}
+            />
+            <div className="form__group ma-bt-md">
+              <label className="form__label" htmlFor="email">
+                Rating
+              </label>
+              <select defaultValue={state.rating} id="ratings" className="form__input">
+                {ratingOptions()}
+              </select>
+            </div>
+          </div>
         </ModalBody>
         <ModalFooter>
           <button className="btn btn--small btn--green btn--save-password">
             Save review
           </button>{' '}
-          <button className="btn btn--small btn--green btn--save-password">
+          <button
+            className="btn btn--small btn--green btn--save-password"
+            onClick={toggle}
+          >
             Cancel
           </button>
         </ModalFooter>
@@ -62,7 +110,9 @@ const ReviewCard = (props) => {
   return (
     <Fragment>
       {reviewEditMarkup}
-      <div className="reviews__card">
+      <div
+        className={`reviews__card ${props.edit ? 'reviews__card-user' : null}`}
+      >
         {editButton}
         <div className="reviews__avatar">
           <img
@@ -73,7 +123,9 @@ const ReviewCard = (props) => {
           <h6 className="reviews__user">{review.user.name}</h6>
         </div>
         <p className="reviews__text">{review.review}</p>
-        {props.edit ? (<p className="reviews__product-name">{review.product.name}</p>) : (null)}
+        {props.edit ? (
+          <p className="reviews__product-name">{review.product.name}</p>
+        ) : null}
         <div className="reviews__rating">{starsMarkup}</div>
       </div>
     </Fragment>
