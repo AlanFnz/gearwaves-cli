@@ -8,15 +8,14 @@ import MyReviews from '../components/MyReviews';
 // Redux
 import { connect } from 'react-redux';
 // Icons
-import settings from '../img/settings.svg'
-import briefcase from '../img/briefcase.svg'
-import starFull from '../img/star-full-white.svg'
-import map from '../img/map.svg'
-import users from '../img/users.svg'
+import settings from '../img/settings.svg';
+import briefcase from '../img/briefcase.svg';
+import starFull from '../img/star-full-white.svg';
+import map from '../img/map.svg';
+import users from '../img/users.svg';
 
 const Account = (props) => {
-
-  const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)
+  const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/);
 
   useEffect(() => {
     !haveToken && !props.user.authenticated && props.history.push('/');
@@ -25,53 +24,74 @@ const Account = (props) => {
   const navItem = (link, text, icon, active) => (
     <li className={`${active ? `side-nav--active` : ''}`}>
       <Link to={link}>
-        <img className="nav__icon" src={icon} alt='Nav Icon' />
+        <img className="nav__icon" src={icon} alt="Nav Icon" />
         {text}
       </Link>
     </li>
-  )
+  );
 
-  const adminNav = props.user.role === 'admin' ? (
-    <div className="admin-nav">
-      <h5 className="admin-nav__heading">Admin</h5>
-      <ul className="side-nav">
-      {navItem('#', 'Manage products', map)}
-      {navItem('#', 'Manage users', users)}
-      {navItem('#', 'Manage reviews', starFull)}
-      {navItem('#', 'Manage booking', briefcase)}
-      </ul>
-    </div>
-  ) : null;
+  const adminNav =
+    props.user.role === 'admin' ? (
+      <div className="admin-nav">
+        <h5 className="admin-nav__heading">Admin</h5>
+        <ul className="side-nav">
+          {navItem('#', 'Manage products', map)}
+          {navItem('#', 'Manage users', users)}
+          {navItem('#', 'Manage reviews', starFull)}
+          {navItem('#', 'Manage booking', briefcase)}
+        </ul>
+      </div>
+    ) : null;
 
   const pageRender = () => {
     switch (props.match.params.section) {
-    case 'settings':
-      return <UserProfile />
-    case 'myGear':
-      return <MyGear />
-    case 'myReviews':
-      return <MyReviews />
-    default:
-      return <UserProfile />
-    };
+      case 'settings':
+        return <UserProfile />;
+      case 'myGear':
+        return <MyGear />;
+      case 'myReviews':
+        return <MyReviews />;
+      default:
+        return <UserProfile />;
+    }
   };
 
   return (
     <main className="main">
-      <div className="user-view">
-        <nav className="user-view__menu">
-          <ul className="side-nav">
-            {navItem('/account/settings', 'Settings', settings, props.match.params.section === 'settings' ? true : !props.match.params.section ? true : false)}
-            {navItem('/account/myGear', 'My Gear', briefcase, props.match.params.section === 'myGear' ? true : false)}
-            {navItem('/account/myReviews', 'My reviews', starFull, props.match.params.section === 'myReviews' ? true : false)}
-          </ul>
-          {adminNav}
-        </nav>
-        <div className="user-view__content">
-          {/* {pageRender(state.activeSection)} */}
-          {pageRender()}
-        </div>
-      </div>
+      <Container className="user-view">
+        <Row className="laconchadetumadre">
+          <Col md="3" xs="12" className="user-view__menu">
+            <nav >
+              <ul className="side-nav">
+                {navItem(
+                  '/account/settings',
+                  'Settings',
+                  settings,
+                  props.match.params.section === 'settings'
+                    ? true
+                    : !props.match.params.section
+                    ? true
+                    : false
+                )}
+                {navItem(
+                  '/account/myGear',
+                  'My Gear',
+                  briefcase,
+                  props.match.params.section === 'myGear' ? true : false
+                )}
+                {navItem(
+                  '/account/myReviews',
+                  'My reviews',
+                  starFull,
+                  props.match.params.section === 'myReviews' ? true : false
+                )}
+              </ul>
+              {adminNav}
+            </nav>
+          </Col>
+          <Col md="9" xs="12" className="user-view__content">{pageRender()}</Col>
+        </Row>
+      </Container>
     </main>
   );
 };

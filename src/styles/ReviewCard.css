@@ -42,6 +42,12 @@
   font-style: italic;
   font-weight: 400;
 }
+.reviews__product-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+}
 .reviews__rating {
   margin-top: auto;
   display: -webkit-box;
@@ -52,6 +58,39 @@
   height: 2rem;
   width: 2rem;
   margin-right: 1px;
+}
+
+.reviews__edit-position {
+  position: relative;
+	width: 0;
+	height: 0;
+	bottom: 5.5rem;
+	left: 12.5rem;
+}
+
+.reviews__edit-container {
+	position: absolute;
+	width: 4rem;
+	height: 4rem;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
+  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  -webkit-box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.reviews__edit {
+  height: 2rem;
+  width: 2rem;
+  margin-top: 0.8rem;
 }
 .reviews__star--active {
   fill: #55c57a;

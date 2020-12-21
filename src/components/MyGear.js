@@ -17,22 +17,22 @@ const MyGear = (props) => {
 
   let noGearMarkup = (
     <div className="user-view__form-container">
-      <Row className="cta__content">
+      <div className="cta__content">
         <h2 className="heading-secondary ma-bt-md">Anything yet :(</h2>
-      </Row>
-      <Row className="cta__content">
+      </div>
+      <div className="cta__content">
         <Link to="/">
           <button className="btn btn--small btn--green">Buy new gear!</button>
         </Link>
-      </Row>
+      </div>
     </div>
   );
 
   let userGearMarkup = (
     <div className="user-view__form-container">
-    <Row className="cta__content">
+    <div className="cta__content">
       <h2 className="heading-secondary ma-bt-md">Here will be the gear</h2>
-    </Row>
+    </div>
   </div>
   )
 
