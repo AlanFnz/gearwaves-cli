@@ -715,7 +715,7 @@ body {
   display: -ms-flexbox;
   display: flex;
 }
-.laconchadetumadre {
+.user-view__row {
   width: 100%;
 }
 .user-view__menu {

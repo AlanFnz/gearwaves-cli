@@ -59,7 +59,7 @@ const Account = (props) => {
   return (
     <main className="main">
       <Container className="user-view">
-        <Row className="laconchadetumadre">
+        <Row className="user-view__row">
           <Col md="3" xs="12" className="user-view__menu">
             <nav >
               <ul className="side-nav">
