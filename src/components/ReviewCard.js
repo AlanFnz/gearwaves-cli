@@ -1,14 +1,18 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import axios from '../axios';
 // Styles
 import '../styles/ReviewCard.css';
 // Components
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { showAlert } from '../util/alerts';
 // Icons
 import starEmpty from '../img/star-empty.svg';
 import starFull from '../img/star-full.svg';
 import edit from '../img/edit.svg';
 // Redux
 import { connect } from 'react-redux';
+// Actions
+import { updateReview } from '../redux/actions/dataActions';
 
 const ReviewCard = (props) => {
   const { review } = props;
@@ -19,6 +23,8 @@ const ReviewCard = (props) => {
   });
 
   const toggle = () => setState({ modal: !state.modal });
+
+  const clearState = () => setState({modal: false, review: '', rating: ''})
 
   useEffect(() => {
     if (!state.review && props.review.review)
@@ -35,6 +41,30 @@ const ReviewCard = (props) => {
       ...prevState,
       [id]: value,
     }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { rating } = state;
+    const rvw = state.review;
+    if (rvw.length < 10) return showAlert('error', 'A review must have at least 10 characters');
+    try {
+      const res = await axios({
+        method: 'PATCH',
+        url: `/reviews/${review.id}`,
+        data: {
+          'review': rvw,
+          'rating': rating
+        }
+      });
+      if (res.data.status === 'success') {
+        props.updateReview(res.data);
+        showAlert('success', 'Review updated succesfully!');
+        clearState();
+      };
+    } catch (err) {
+      showAlert('error', err.response.data.message);
+    };
   };
 
   const array = [1, 2, 3, 4, 5];
@@ -58,7 +88,7 @@ const ReviewCard = (props) => {
   let ratingOptions = () => {
     const values = [1, 2, 3, 4, 5];
     return values.map(value => {
-      return  <option value={value} onChange={handleChange}>{value}</option>
+      return  <option value={value}>{value}</option>
     })
   }
     
@@ -86,14 +116,14 @@ const ReviewCard = (props) => {
               <label className="form__label" htmlFor="email">
                 Rating
               </label>
-              <select defaultValue={state.rating} id="ratings" className="form__input">
+              <select defaultValue={state.rating} id="rating" className="form__input"  onChange={handleChange} required>
                 {ratingOptions()}
               </select>
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn--small btn--green btn--save-password">
+          <button className="btn btn--small btn--green btn--save-password" onClick={handleSubmit}>
             Save review
           </button>{' '}
           <button
@@ -135,4 +165,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(ReviewCard);
+export default connect(mapStateToProps, { updateReview })(ReviewCard);

@@ -4,9 +4,7 @@ import {
   SET_PRODUCT,
   SET_GEAR,
   SET_REVIEWS,
-  SET_ERRORS,
-  CLEAR_ERRORS,
-  CLEAR_SNIPPETS,
+  UPDATE_REVIEW,
   LOADING_UI,
   LOADING_DATA,
 } from '../types';
@@ -21,6 +19,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+  let index;
   switch (action.type) {
     case LOADING_DATA:
       return {
@@ -51,6 +50,14 @@ export default function (state = initialState, action) {
         ...state,
         reviews: action.payload.data.data,
         loading: false,
+      };
+    case UPDATE_REVIEW:
+      index = state.reviews.findIndex(
+        (review) => review.id === action.payload.data.data.id
+      )
+      state.reviews[index] = action.payload.data.data
+      return {
+        ...state,
       };
     default:
       return state;

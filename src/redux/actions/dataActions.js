@@ -3,6 +3,7 @@ import {
   SET_PRODUCT,
   SET_GEAR,
   SET_REVIEWS,
+  UPDATE_REVIEW,
   LOADING_DATA,
 } from '../types';
 import axios from '../../axios';
@@ -64,4 +65,12 @@ export const getByUser = (userId, item) => (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+// Get update review
+export const updateReview = (data) => (dispatch) => {
+  dispatch({ 
+    type: UPDATE_REVIEW,
+    payload: data
+  });
 };
