@@ -15,6 +15,8 @@ import Home from './pages/home';
 import Product from './pages/product';
 import Login from './pages/login';
 import Signup from './pages/signup';
+import PasswordRecovery from './pages/passwordRecovery';
+import PasswordReset from './pages/passwordReset';
 import Account from './pages/account';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
             <Route exact path='/products/:slug' component={Product} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
+            <Route exact path='/passwordRecovery' component={PasswordRecovery} />
+            <Route exact path='/passwordReset/:token' component={PasswordReset} />
             <Route exact path='/account' component={Account} />
             <Route exact path='/account/:section' component={Account} />
           </Switch>

@@ -18,6 +18,7 @@ export const loadingUser = (condition) => (dispatch) => {
 
 // Set user
 export const setUser = (userData) => (dispatch) => {
+  console.log(userData);
   dispatch({ 
     type: SET_USER,
     payload: userData,

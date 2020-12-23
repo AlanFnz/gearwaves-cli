@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../axios';
+import { Link } from 'react-router-dom';
 // Components
 import { showAlert } from '../util/alerts';
 // Redux
@@ -88,6 +89,7 @@ const Login = (props) => {
             Login
           </button>
         </form>
+        <Link className='forgotPassword' to='/passwordRecovery'><p>Forgot your password?</p></Link>
       </div>
     </main>
   );

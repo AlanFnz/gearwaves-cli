@@ -239,6 +239,10 @@ body {
   z-index: 10;
 }
 
+.forgotPassword {
+  font-size: 1.5rem;
+}
+
 .btn,
 .btn:link,
 .btn:visited {
