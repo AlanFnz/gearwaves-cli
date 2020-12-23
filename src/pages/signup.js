@@ -30,6 +30,7 @@ const Signup = (props) => {
   const signup = async (event) => {
     event.preventDefault();
     const { name, email, password, passwordConfirm } = state;
+    if (!name || !email || !password || !passwordConfirm) return showAlert('error', 'Please, complete all the fields');
     try {
       const res = await axios({
         method: 'POST',
@@ -54,11 +55,18 @@ const Signup = (props) => {
     }
   };
 
+  const onKeyDown = (event) => {
+    if ((event.charCode || event.keyCode) === 13) {
+      event.preventDefault();
+      signup(event);
+    }
+  }
+
   return (
     <main className="main login">
       <div className="login-form">
         <h2 className="heading-secondary ma-bt-lg">Create your account</h2>
-        <form className="form__group">
+        <form className="form__group" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="name">
             Name
           </label>
@@ -74,7 +82,7 @@ const Signup = (props) => {
             maxLength="40"
           />
         </form>
-        <form className="form__group ma-bt-md">
+        <form className="form__group ma-bt-md" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="email">
             Email address
           </label>
@@ -88,7 +96,7 @@ const Signup = (props) => {
             required
           />
         </form>
-        <form className="form__group ma-bt-md">
+        <form className="form__group ma-bt-md" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="password">
             Password
           </label>
@@ -103,7 +111,7 @@ const Signup = (props) => {
             minLength="8"
           />
         </form>
-        <form className="form__group ma-bt-md">
+        <form className="form__group ma-bt-md" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="passwordConfirm">
             Confirm your password
           </label>
@@ -118,7 +126,7 @@ const Signup = (props) => {
             minLength="8"
           />
         </form>
-        <form className="form__group">
+        <form className="form__group" onKeyDown={onKeyDown}>
           <button className="btn btn--green" onClick={signup}>
             Sign up
           </button>

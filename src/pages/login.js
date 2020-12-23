@@ -29,6 +29,8 @@ const Login = (props) => {
   const login = async (event) => {
     event.preventDefault();
     const { email, password } = state;
+    if (!email) return showAlert('error', 'Please, enter your email');
+    if (!password) return showAlert('error', 'Please, enter your password');
     try {
       const res = await axios({
         method: 'POST',
@@ -51,11 +53,18 @@ const Login = (props) => {
     };
   };
 
+  const onKeyDown = (event) => {
+    if ((event.charCode || event.keyCode) === 13) {
+      event.preventDefault();
+      login(event);
+    }
+  }
+  
   return (
     <main className="main login">
       <div className="login-form">
         <h2 className="heading-secondary ma-bt-lg">Log into your account</h2>
-        <form className="form__group">
+        <form className="form__group" onKeyDown={onKeyDown} >
           <label className="form__label" htmlFor="email">
             Email address
           </label>
@@ -69,7 +78,7 @@ const Login = (props) => {
             required
           />
         </form>
-        <form className="form__group ma-bt-md">
+        <form className="form__group ma-bt-md" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="password">
             Password
           </label>
@@ -84,7 +93,7 @@ const Login = (props) => {
             minLength="8"
           />
         </form>
-        <form className="form__group">
+        <form className="form__group" onKeyDown={onKeyDown}>
           <button className="btn btn--green" onClick={login}>
             Login
           </button>
