@@ -31,7 +31,7 @@ const Account = (props) => {
   );
 
   const adminNav =
-    props.user.role === 'admin' ? (
+    props.user.credentials.role === 'admin' ? (
       <div className="admin-nav">
         <h5 className="admin-nav__heading">Admin</h5>
         <ul className="side-nav">
@@ -60,7 +60,7 @@ const Account = (props) => {
     <main className="main main-account">
       <Container className="user-view">
         <Row className="user-view__row">
-          <Col md="3" xs="12" className="user-view__menu">
+          <Col md="3" xs="12" className={`user-view__menu ${props.user.credentials.role === 'admin' ? 'user-view__menu-admin' : null}`}>
             <nav >
               <ul className="side-nav">
                 {navItem(
