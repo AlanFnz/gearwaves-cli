@@ -7,6 +7,8 @@ import ReviewCard from './ReviewCard';
 import { connect } from 'react-redux';
 // Actions
 import { getByUser } from '../redux/actions/dataActions';
+// Functions
+import { noContentMarkup } from '../util/functions';
 
 const MyReviews = (props) => {
   const { getByUser } = props;
@@ -15,19 +17,6 @@ const MyReviews = (props) => {
   useEffect(() => {
     getByUser(userId, 'reviews');
   }, [getByUser, userId]);
-
-  let noReviewsMarkup = (
-    <div className="user-view__form-container">
-      <Row className="cta__content">
-        <h2 className="heading-secondary ma-bt-md">Anything yet :(</h2>
-      </Row>
-      <Row className="cta__content">
-        <Link to="/">
-          <button className="btn btn--small btn--green">Buy new gear!</button>
-        </Link>
-      </Row>
-    </div>
-  );
 
   const reviewsMarkup =
     props.data.reviews &&
@@ -46,12 +35,12 @@ const MyReviews = (props) => {
   if (props.data.loading) {
     markup = <div className="user-view__form-container"><Spinner size="md" color="dark" /></div>;
   } else if (props.data.reviews.length <= 0) {
-    markup = noReviewsMarkup;
+    markup = noContentMarkup(props.user.credentials.role);
   } else {
     markup = reviewsDisplayMarkup;
   }
 
-  return <Container>{markup}</Container>;
+  return <Container className="user-view__form-reviews">{markup}</Container>;
 };
 
 const mapStateToProps = (state) => ({

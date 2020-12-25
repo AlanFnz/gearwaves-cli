@@ -5,13 +5,15 @@ import { Container, Row, Col, Spinner } from 'reactstrap';
 import UserProfile from '../components/UserProfile';
 import MyGear from '../components/MyGear';
 import MyReviews from '../components/MyReviews';
+import ProductsAdmin from '../components/admin/ProductsAdmin';
 // Redux
 import { connect } from 'react-redux';
 // Icons
 import settings from '../img/settings.svg';
 import briefcase from '../img/briefcase.svg';
+import money from '../img/money.svg';
+import product from '../img/product.svg';
 import starFull from '../img/star-full-white.svg';
-import map from '../img/map.svg';
 import users from '../img/users.svg';
 
 const Account = (props) => {
@@ -35,10 +37,30 @@ const Account = (props) => {
       <div className="admin-nav">
         <h5 className="admin-nav__heading">Admin</h5>
         <ul className="side-nav">
-          {navItem('#', 'Manage products', map)}
-          {navItem('#', 'Manage users', users)}
-          {navItem('#', 'Manage reviews', starFull)}
-          {navItem('#', 'Manage booking', briefcase)}
+          {navItem(
+                  '/account/products',
+                  'Products',
+                  product,
+                  props.match.params.section === 'products' ? true : false
+                )}
+          {navItem(
+                  '/account/users',
+                  'Users',
+                  users,
+                  props.match.params.section === 'users' ? true : false
+                )}
+          {navItem(
+                  '/account/reviews',
+                  'Reviews',
+                  starFull,
+                  props.match.params.section === 'reviews' ? true : false
+                )}
+          {navItem(
+                  '/account/sales',
+                  'Sales',
+                  money,
+                  props.match.params.section === 'sales' ? true : false
+                )}
         </ul>
       </div>
     ) : null;
@@ -51,6 +73,12 @@ const Account = (props) => {
         return <MyGear />;
       case 'myReviews':
         return <MyReviews />;
+      case 'products':
+        if(props.user.credentials.role !== 'admin'){
+          return <UserProfile />;
+        } else { 
+          return <ProductsAdmin />;
+        }
       default:
         return <UserProfile />;
     }

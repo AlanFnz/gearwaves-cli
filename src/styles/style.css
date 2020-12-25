@@ -961,33 +961,43 @@ body {
   margin-right: 0.75rem;
 }
 
+.user-view__row.row {
+  width: 100%;
+}
+
+.admin__table {
+  font-size: 1.5rem;
+}
+
 @media only screen and (max-width: 70em) and (min-width: 767px)  {
-  .user-view__form-container {
+  .user-view__form-reviews {
     max-width: 60rem;
   }
 }
 
 @media only screen and (max-width: 65em) and (min-width: 767px)  {
-  .user-view__form-container {
+  .user-view__form-reviews {
     max-width: 50rem;
   }
 }
 
 @media only screen and (max-width: 60em) and (min-width: 767px)  {
-  .user-view__form-container {
+  .user-view__form-reviews {
     max-width: 40rem;
   }
 }
 
 @media only screen and (max-width: 57em) and (min-width: 767px)  {
-  .user-view__form-container {
+  .user-view__form-reviews {
     max-width: 35rem;
+    padding: 0;
   }
 }
 
 @media only screen and (max-width: 55em) and (min-width: 767px) {
-  .user-view__form-container {
-    max-width: 30rem;
+  .user-view__form-reviews {
+    max-width: 32rem;
+    padding: 0;
   }
 }
 
@@ -1072,6 +1082,9 @@ body {
 @media only screen and (max-width: 34em) {
   .main {
     padding: 2rem 1.5rem;
+  }
+  .user-view__form-container__reviews {
+    padding: 2rem;
   }
 }
 
