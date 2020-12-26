@@ -295,6 +295,17 @@ body {
   background-color: #fff;
 }
 
+.btn--red {
+  background-color: rgb(192, 29, 29);
+  color: #fff;
+}
+.btn--red::after {
+  background-color: rgb(192, 29, 29);
+}
+.btn--marginleft {
+  margin-left: 1rem;
+}
+
 .btn--green {
   background-color: #55c57a;
   color: #fff;
@@ -751,6 +762,11 @@ body {
   padding: 0 4rem;
 }
 
+.user-view__form-container__product {
+  max-width: 100%;
+  padding: 0 2rem;
+}
+
 .side-nav {
   list-style: none;
 }
@@ -1039,6 +1055,10 @@ body {
   .user-view__form-container {
     padding: 2rem 4rem;
   }
+  .admin__table {
+    margin: 2rem auto;
+  }
+  
 }
 
 @media only screen and (min-width: 767px) {

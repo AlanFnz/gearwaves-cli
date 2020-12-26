@@ -1,43 +1,132 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import '../../styles/ProductCard.css';
 
 const ProductCard = (props) => {
-  const { product } = props;
+  const { product, cleanSelected } = props;
   return (
-    <div className="card">
-      <div className="card__header">
-        <div className="card__picture">
-          <div className="card__picture-overlay"> &nbsp;</div>
-          <img className="card__picture-img" src={`${process.env.REACT_APP_API_URL}/img/products/${product.imageCover}`} alt="product name"/>
-        </div>
-        <h3 className="heading-tertirary"><span>{product.name}</span></h3>
-      </div>
-      <div className="card__details">
-        <p className="card__text">{product.summary}</p>
-        <div className="card__data">
-          <svg className="card__icon">
-            <use xlink href="img/icons.svg#icon-map-flag"></use>
-          </svg>
-          <span>{`Made in ${product.madeIn.description}`}</span>
-        </div>
-        <div className="card__data">
-          <svg className="card__icon">
-            <use xlink href="img/icons.svg#icon-map-pin"></use>
-          </svg>
-          <span>{`${product.locations.length} Stores`}</span>
-        </div>
-      </div>
-      <div className="card__footer">
-        <p>
-          <span className="card__footer-value">{product.price}</span>
-          <span className="card__footer-text"> €</span>
-        </p>
-        <p className="card__ratings">
-          <span className="card__footer-value">{`Rating: ${product.ratingsAverage}`}</span>
-          <span className="card__footer-text">{` (${product.ratingsQuantity})`}</span>
-        </p>
-        <Link className="btn btn--green btn--small" to={`/products/${product.slug}`}> Details</Link>
+    <div className="card card-admin">
+      <div className="user-view__form-container__product">
+        <h2 className="heading-secondary ma-bt-md">Edit product</h2>
+        <form className="form form-user-data">
+          <div className="form__group">
+            <label className="form__label" htmlFor="name">
+              Name
+            </label>
+            <input
+              id="name"
+              className="form__input"
+              type="text"
+              // value={state.name}
+              required
+              name="name"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="summary">
+              Summary
+            </label>
+            <input
+              id="summary"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="summary"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="description">
+              Description
+            </label>
+            <input
+              id="description"
+              className="form__input"
+              type="textarea"
+              // value={state.email}
+              required
+              name="description"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="slug">
+              Slug
+            </label>
+            <input
+              id="slug"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="slug"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="madeIn">
+              Made In
+            </label>
+            <input
+              id="madeIn"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="madeIn"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="warrantly">
+              Warrantly
+            </label>
+            <input
+              id="warrantly"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="warrantly"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="stock">
+              Stock
+            </label>
+            <input
+              id="stock"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="stock"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="form__group">
+            <label className="form__label" htmlFor="price">
+              Price
+            </label>
+            <input
+              id="price"
+              className="form__input"
+              type="text"
+              // value={state.email}
+              required
+              name="price"
+              // onChange={handleChange}
+            />
+          </div>
+          <div className="line">&nbsp;</div>
+          <div className="form__group right">
+            <button className="btn btn--small btn--green">Save settings</button>
+            <button className="btn btn--small btn--red btn--marginleft" onClick={cleanSelected}>Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
   );
