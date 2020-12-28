@@ -20,13 +20,19 @@ const UserProfile = (props) => {
     passwordConfirm: '',
   });
 
-    useEffect(() => {
-      if (!state.name && props.user.credentials.name) setState(prevState => ({
+  useEffect(() => {
+    if (!state.name && props.user.credentials.name)
+      setState((prevState) => ({
         ...prevState,
         name: props.user.credentials.name,
         email: props.user.credentials.email,
       }));
-    }, [props.user.credentials.name, props.user.credentials.email, state.name, props.user.loading]);
+  }, [
+    props.user.credentials.name,
+    props.user.credentials.email,
+    state.name,
+    props.user.loading,
+  ]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -38,15 +44,15 @@ const UserProfile = (props) => {
 
   const handlePhotoChange = (event) => {
     const photo = event.target.files[0];
-    setState({ 
+    setState({
       ...state,
-      photo
+      photo,
     });
   };
 
   const emptyPassword = () => {
-    setState({ passwordCurrent: '', password: '', passwordConfirm: '' })
-  }
+    setState({ passwordCurrent: '', password: '', passwordConfirm: '' });
+  };
 
   const saveSettings = async (event) => {
     event.preventDefault();
@@ -60,7 +66,7 @@ const UserProfile = (props) => {
         method: 'PATCH',
         url: `/users/updateMe`,
         data,
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (res.data.status === 'success') {
         props.setUser(res.data);
@@ -84,8 +90,8 @@ const UserProfile = (props) => {
         data: {
           passwordCurrent,
           password,
-          passwordConfirm
-        }
+          passwordConfirm,
+        },
       });
       if (res.data.status === 'success') {
         emptyPassword();
@@ -154,7 +160,12 @@ const UserProfile = (props) => {
             <label htmlFor="photo">Choose new photo</label>
           </div>
           <div className="form__group right">
-            <button className="btn btn--small btn--green" onClick={saveSettings}>Save settings</button>
+            <button
+              className="btn btn--small btn--green"
+              onClick={saveSettings}
+            >
+              Save settings
+            </button>
           </div>
         </form>
       </div>
@@ -208,7 +219,10 @@ const UserProfile = (props) => {
             />
           </div>
           <div className="form__group right">
-            <button className="btn btn--small btn--green btn--save-password" onClick={savePassword}>
+            <button
+              className="btn btn--small btn--green btn--save-password"
+              onClick={savePassword}
+            >
               Save password
             </button>
           </div>

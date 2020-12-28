@@ -4,6 +4,7 @@ import {
   SET_PRODUCT,
   SET_GEAR,
   SET_REVIEWS,
+  SET_EXPERTS,
   UPDATE_REVIEW,
   LOADING_UI,
   LOADING_DATA,
@@ -14,6 +15,7 @@ const initialState = {
   product: {},
   gear: [],
   reviews: [],
+  experts: [],
   loading: false,
   fetched: false,
 };
@@ -49,6 +51,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         reviews: action.payload.data.data,
+        loading: false,
+      };
+    case SET_EXPERTS:
+      return {
+        ...state,
+        experts: action.payload.data.data,
         loading: false,
       };
     case UPDATE_REVIEW:

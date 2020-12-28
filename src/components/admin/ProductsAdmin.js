@@ -18,7 +18,6 @@ const ProductsAdmin = (props) => {
   });
 
   const setSelected = (event) => {
-    // console.log(event.target.attributes[0].value);
     setState({ selected: event.target.attributes[0].value });
   };
 
@@ -57,7 +56,7 @@ const ProductsAdmin = (props) => {
         {productsMap}
       </tbody>
     </Table>   
-    </div> : <Spinner size='sm' type="grow" color="dark" />
+    </div> : null;
  
   let markup;
   if (props.data.loading) {

@@ -1,7 +1,6 @@
-import React, { useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 // Components
-import { Container, Row, Col, Spinner, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 import ReviewCard from './ReviewCard';
 // Redux
 import { connect } from 'react-redux';

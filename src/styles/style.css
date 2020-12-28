@@ -145,6 +145,10 @@ body {
   font-size: 3.5rem;
 }
 
+.heading-secondary--product-admin {
+  font-size: 2rem;
+}
+
 .heading-primary,
 .heading-tertirary {
   color: #fff;
@@ -929,6 +933,11 @@ body {
   -ms-flex-align: center;
   align-items: center;
   font-size: 1.6rem;
+}
+
+.form__photo-upload-product {
+  display: block;
+  text-align: justify;
 }
 
 .form__user-photo {

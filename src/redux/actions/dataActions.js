@@ -3,6 +3,7 @@ import {
   SET_PRODUCT,
   SET_GEAR,
   SET_REVIEWS,
+  SET_EXPERTS,
   UPDATE_REVIEW,
   LOADING_DATA,
 } from '../types';
@@ -74,3 +75,19 @@ export const updateReview = (data) => (dispatch) => {
     payload: data
   });
 };
+
+// Get experts (users with role = technical || sales)
+export const getExperts = () => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get('/users/experts')
+    .then((res) => {
+      dispatch({
+        type: SET_EXPERTS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
