@@ -6,6 +6,7 @@ import {
   SET_EXPERTS,
   UPDATE_REVIEW,
   LOADING_DATA,
+  CLEAR_PRODUCT,
 } from '../types';
 import axios from '../../axios';
 
@@ -68,12 +69,19 @@ export const getByUser = (userId, item) => (dispatch) => {
     });
 };
 
-// Get update review
+// Update review
 export const updateReview = (data) => (dispatch) => {
-  dispatch({ 
+  dispatch({
     type: UPDATE_REVIEW,
-    payload: data
+    payload: data,
   });
+};
+
+//TODO:
+// Update product
+export const updateProduct = (product, id) => async (dispatch) => {
+  console.log('update action');
+  // Update product in products array (Redux state)
 };
 
 // Get experts (users with role = technical || sales)
@@ -90,4 +98,18 @@ export const getExperts = () => (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
-}
+};
+
+// Set one product
+export const setProduct = (product) => (dispatch) => {
+  let productObject = { data: { data: product } };
+  dispatch({
+    type: SET_PRODUCT,
+    payload: productObject,
+  });
+};
+
+// Clear product
+export const clearProduct = () => (dispatch) => {
+  dispatch({ type: CLEAR_PRODUCT });
+};

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 // Components
 import { Modal, ModalHeader, ModalBody, ModalFooter, Spinner, Table, Label, Input } from 'reactstrap';
+import { showAlert } from '../../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
 import { getExperts } from '../../redux/actions/dataActions';
 
 const SelectExperts = (props) => {
-  const { getExperts, handle, loading } = props;
+  const { getExperts, handle, toggle } = props;
 
   useEffect(() => {
     if (props.data.experts.length <= 0) getExperts();
@@ -24,6 +25,11 @@ const SelectExperts = (props) => {
         </Label></td>
     </tr>
   )});
+
+  const save = (event) => {
+    if (props.expertsSelected.length === 0) return showAlert('error', `Select at least one expert`);
+    toggle(event);
+  };
 
   let tableMarkup = <div>
   <Table className="admin__table">
@@ -52,15 +58,9 @@ const SelectExperts = (props) => {
           {tableMarkup}
         </ModalBody>
         <ModalFooter>
-          <button className="btn btn--small btn--green btn--save-password">
-            Save
+          <button className="btn btn--small btn--green btn--save-password" onClick={save}>
+            Done
           </button>{' '}
-          <button
-            className="btn btn--small btn--red btn--save-password"
-            onClick={props.toggle}
-          >
-            Cancel
-          </button>
         </ModalFooter>
       </Modal>
     </div>

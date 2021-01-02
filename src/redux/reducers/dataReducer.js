@@ -8,6 +8,7 @@ import {
   UPDATE_REVIEW,
   LOADING_UI,
   LOADING_DATA,
+  CLEAR_PRODUCT,
 } from '../types';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   experts: [],
   loading: false,
   fetched: false,
+  editProductOpen: false,
 };
 
 export default function (state = initialState, action) {
@@ -66,6 +68,11 @@ export default function (state = initialState, action) {
       state.reviews[index] = action.payload.data.data
       return {
         ...state,
+      };
+    case CLEAR_PRODUCT:
+      return {
+        ...state,
+        product: {},
       };
     default:
       return state;

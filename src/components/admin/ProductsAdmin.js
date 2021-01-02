@@ -6,23 +6,31 @@ import ProductCardAdmin from './ProductCardAdmin';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { getByUser, getProducts } from '../../redux/actions/dataActions';
+import { getByUser, getProduct, getProducts, clearProduct } from '../../redux/actions/dataActions';
 // Functions
 import { noContentMarkup } from '../../util/functions';
 
 const ProductsAdmin = (props) => {
-  const { getProducts, loading } = props;
+  const { getProducts, getProduct, clearProduct, loading } = props;
 
   const [state, setState] = useState({
-    selected: null,
+    selected: '',
   });
 
   const setSelected = (event) => {
-    setState({ selected: event.target.attributes[0].value });
+    const productSlug = props.data.products.filter(product => product._id === event.target.attributes[0].value)[0].slug;
+    async function fetchData() {
+      await getProduct(productSlug);
+      setState({ 
+        selected: event.target.attributes[0].value,
+      });
+    };
+    fetchData(productSlug);
   };
 
   const cleanSelected = () => {
-    setState({ selected: null })
+    setState({ selected: '' })
+    clearProduct();
   }
 
   useEffect(() => {
@@ -64,7 +72,7 @@ const ProductsAdmin = (props) => {
   } else if (props.data.products <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else if (state.selected) {
-    markup = <ProductCardAdmin product={props.data.products.find(product => product.id === state.selected)} cleanSelected={cleanSelected} />
+    markup = <ProductCardAdmin cleanSelected={cleanSelected} />
   } else {
     markup = productsMarkup;
   }
@@ -77,4 +85,4 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
-export default connect(mapStateToProps, { getByUser, getProducts })(ProductsAdmin);
+export default connect(mapStateToProps, { getByUser, getProduct, getProducts, clearProduct })(ProductsAdmin);

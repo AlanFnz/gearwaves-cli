@@ -19,7 +19,6 @@ const Mapbox = (props) => {
     const bounds = new mapboxgl.LngLatBounds();
 
     locations.forEach((loc) => {
-      // { "color": "#b40219" }
       const marker = document.createElement('div');
       marker.className = 'marker';
       new mapboxgl.Marker({ element: marker, anchor: 'bottom'})

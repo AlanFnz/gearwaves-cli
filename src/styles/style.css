@@ -83,6 +83,10 @@ body {
   text-align: right !important;
 }
 
+.left {
+  text-align: left !important;
+}
+
 .line {
   margin: 6rem 0;
   width: 100%;
@@ -932,7 +936,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .form__photo-upload-product {

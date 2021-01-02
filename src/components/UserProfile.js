@@ -61,6 +61,7 @@ const UserProfile = (props) => {
     data.append('name', name);
     data.append('email', email);
     if (state.photo) data.append('photo', photo, photo.name);
+  
     try {
       const res = await axios({
         method: 'PATCH',

@@ -35,15 +35,16 @@ const Product = (props) => {
     );
   };
 
+  const imagesIndex = ['imageLeft', 'imageCenter', 'imageRight'];
   const imagesMarkup = isLoading ? (
     <Spinner size="sm" type="grow" color="dark" />
   ) : (
-    props.data.product.images &&
-    props.data.product.images.map((image, i) => (
+    props.data.product.imageLeft &&
+    imagesIndex.map((image, i) => (
       <div className="picture-box" key={uuidv4()}>
         <img
           className={`picture-box__img picture-box__img--${i + 1}`}
-          src={`${process.env.REACT_APP_API_URL}/img/products/${image}`}
+          src={`${process.env.REACT_APP_API_URL}/img/products/${props.data.product[image]}`}
           alt={props.data.product.name}
         />
       </div>
