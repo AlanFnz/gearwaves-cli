@@ -36,7 +36,7 @@ const Product = (props) => {
   };
 
   const imagesIndex = ['imageLeft', 'imageCenter', 'imageRight'];
-  const imagesMarkup = isLoading ? (
+  let imagesMarkup = isLoading ? (
     <Spinner size="sm" type="grow" color="dark" />
   ) : (
     props.data.product.imageLeft &&
@@ -51,19 +51,31 @@ const Product = (props) => {
     ))
   );
 
-  const reviewsMarkup = props.data.product.reviews.length === 0 ? null : isLoading ? (
+  let reviewsMarkup = isLoading ? (
     <Spinner size="sm" type="grow" color="dark" />
-  ) : (
+  ) : props.data.product.reviews &&
+    props.data.product.reviews.length === 0 ? null : (
     props.data.product.reviews &&
     props.data.product.reviews.map((review, i) => (
       <ReviewCard review={review} />
     ))
   );
 
-  const reviewsSection = props.data.product.reviews.length === 0 ? null : ( 
-  <section className="section-reviews">
-    <div className="reviews">{reviewsMarkup}</div>
-  </section> );
+  let reviewsSection =
+    props.data.product.reviews &&
+    props.data.product.reviews.length === 0 ? null : (
+      <section className="section-reviews">
+        <div className="reviews">{reviewsMarkup}</div>
+      </section>
+    );
+
+  let mapbox =
+    props.data.product.locations &&
+    props.data.product.locations.length === 0 ? null : (
+      <section className="section-map">
+        <Mapbox locations={props.data.product.locations} />
+      </section>
+    );
 
   let splittedDescription = isLoading
     ? null
@@ -164,9 +176,7 @@ const Product = (props) => {
           </Row>
         </Container>
         <section className="section-pictures">{imagesMarkup}</section>
-        <section className="section-map">
-          <Mapbox locations={props.data.product.locations} />
-        </section>
+        {mapbox}
         {reviewsSection}
         <section className="section-cta">
           <div className="cta">

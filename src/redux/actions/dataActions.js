@@ -6,6 +6,7 @@ import {
   SET_EXPERTS,
   UPDATE_REVIEW,
   UPDATE_PRODUCTS,
+  DELETE_PRODUCT,
   LOADING_DATA,
   CLEAR_PRODUCT,
 } from '../types';
@@ -78,14 +79,21 @@ export const updateReview = (data) => (dispatch) => {
   });
 };
 
-//TODO:
-// Update products
+// Update products array
 export const updateProducts = (data) => async (dispatch) => {
   dispatch({
     type: UPDATE_PRODUCTS,
     payload: data,
   });
 };
+
+// Delete product from products array
+export const deleteProduct = (id) => async (dispatch) => {
+  dispatch({
+    type: DELETE_PRODUCT,
+    payload: id,
+  })
+}
 
 // Get experts (users with role = technical || sales)
 export const getExperts = () => (dispatch) => {

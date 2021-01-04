@@ -4,24 +4,33 @@ import { Link } from 'react-router-dom';
 import SelectExperts from './SelectExperts';
 import EditStores from './EditStores';
 import EditOrigin from './EditOrigin';
-import { Spinner } from 'reactstrap';
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Spinner,
+} from 'reactstrap';
 import { showAlert } from '../../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { updateProducts } from '../../redux/actions/dataActions';
+import { updateProducts, deleteProduct } from '../../redux/actions/dataActions';
+// icons
+import trash from '../../img/trash-white.svg';
 // Styles
 import '../../styles/ProductCard.css';
 import axios from '../../axios';
 
 const ProductCard = (props) => {
-  const { cleanSelected, updateProducts } = props;
+  const { cleanSelected, updateProducts, deleteProduct } = props;
 
   const initialState = {
     isNew: true,
     expertsModal: false,
     storesModal: false,
     originModal: false,
+    deleteModal: false,
     fetched: false,
     newImageCover: null,
     newImageLeft: null,
@@ -78,7 +87,7 @@ const ProductCard = (props) => {
   };
 
   const handleCheckExperts = (event) => {
-    let expertsNew = state.experts
+    let expertsNew = state.experts;
     if (expertsNew.includes(event.target.dataset.id)) {
       let index = expertsNew.indexOf(event.target.dataset.id);
       expertsNew.splice(index, 1);
@@ -171,6 +180,14 @@ const ProductCard = (props) => {
     }));
   };
 
+  const toggleDeleteModal = (event) => {
+    if (event) event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      deleteModal: !state.deleteModal,
+    }));
+  };
+
   const saveImages = async (id) => {
     const data = new FormData();
 
@@ -219,7 +236,7 @@ const ProductCard = (props) => {
         data,
       });
       if (res.data.status === 'success') {
-        return res.data.data.data._id
+        return res.data.data.data._id;
       }
     } else {
       const res = await axios({
@@ -232,7 +249,6 @@ const ProductCard = (props) => {
         return true;
       }
     }
-
   };
 
   const save = async (event) => {
@@ -241,8 +257,15 @@ const ProductCard = (props) => {
     if (state.isNew && state.newImageCover === null)
       return showAlert('error', `Select a cover image`);
     if (state.isNew)
-      if (state.newImageLeft === null || state.newImageCenter === null || state.newImageRight === null) 
-        return showAlert('error', `Select three product images besides the cover image`);
+      if (
+        state.newImageLeft === null ||
+        state.newImageCenter === null ||
+        state.newImageRight === null
+      )
+        return showAlert(
+          'error',
+          `Select three product images besides the cover image`
+        );
     if (
       !state.name.trim() ||
       !state.price.toString().trim() ||
@@ -263,7 +286,7 @@ const ProductCard = (props) => {
     // Update
     try {
       let saveDataResult = await saveData();
-      let saveImagesResult
+      let saveImagesResult;
 
       if (
         state.newImageCover ||
@@ -273,11 +296,13 @@ const ProductCard = (props) => {
       ) {
         saveImagesResult = await saveImages(saveDataResult);
       } else {
-        saveImagesResult = true
+        saveImagesResult = true;
       }
 
       if (saveDataResult && saveImagesResult) {
-        state.isNew ? showAlert('success', `Product created successfully`) : showAlert('success', `Product updated successfully`);
+        state.isNew
+          ? showAlert('success', `Product created successfully`)
+          : showAlert('success', `Product updated successfully`);
         window.setTimeout(() => {
           cleanSelected();
         }, 1500);
@@ -294,6 +319,27 @@ const ProductCard = (props) => {
     event.preventDefault();
     cleanSelected();
   };
+
+  const deleteAction = async () => {
+    try {
+      const res = await axios({
+        method: 'DELETE',
+        url: `/products/${state.id}`,
+      });
+      if (res.status === 204) {
+        showAlert('success', `Product deleted successfully`)
+        deleteProduct(props.data.product._id);
+        toggleDeleteModal()
+        window.setTimeout(() => {
+          cleanSelected();
+        }, 1500);
+      }
+    } catch(err) {
+      toggleDeleteModal()
+      showAlert('error', `Something went wrong! :(`);
+      console.log(err);
+    }
+  }
 
   let formFieldMarkup = (
     field,
@@ -351,6 +397,37 @@ const ProductCard = (props) => {
     );
   };
 
+  let deleteDialog = (
+    <Modal
+      isOpen={state.deleteModal}
+      toggle={toggleDeleteModal}
+      centered={true}
+    >
+      <ModalHeader toggle={props.toggle}>Delete Product</ModalHeader>
+      <ModalBody style={{ textAlign: 'center' }}>
+        <p style={{ fontSize: '1.5rem' }}>
+          Are you sure you want to delete this product?
+        </p>
+        <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>This action can't be
+          undone</p>
+      </ModalBody>
+      <ModalFooter>
+        <button
+          className="btn btn--small btn--red btn--save-password"
+          onClick={deleteAction}
+        >
+          Delete
+        </button>{' '}
+        <button
+          className="btn btn--small btn--green btn--save-password"
+          onClick={toggleDeleteModal}
+        >
+          Cancel
+        </button>{' '}
+      </ModalFooter>
+    </Modal>
+  );
+
   return props.data.loading ? (
     <Spinner size="md" color="dark" />
   ) : (
@@ -374,7 +451,16 @@ const ProductCard = (props) => {
         origin={state.madeIn}
         handle={handleOriginSave}
       />
+      {deleteDialog}
       <div className="card card-admin">
+        <div className="admin__delete-position">
+          <div
+            className="admin__delete-container"
+            onClick={toggleDeleteModal}
+          >
+            <img src={trash} alt="Delete product" className="admin__delete" />
+          </div>
+        </div>
         <div className="user-view__form-container__product">
           <h2 className="heading-secondary ma-bt-md">Edit product</h2>
           <form className="form form-user-data" onSubmit={save}>
@@ -431,15 +517,6 @@ const ProductCard = (props) => {
               >
                 Cancel
               </button>
-              <button
-                className="btn btn--small btn--red btn--marginleft"
-                onClick={(event) => {
-                  event.preventDefault();
-                  console.log(state);
-                }}
-              >
-                Log
-              </button>
             </div>
           </form>
         </div>
@@ -450,6 +527,7 @@ const ProductCard = (props) => {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  user: state.user,
 });
 
-export default connect(mapStateToProps, { updateProducts })(ProductCard);
+export default connect(mapStateToProps, { updateProducts, deleteProduct })(ProductCard);

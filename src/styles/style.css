@@ -840,6 +840,39 @@ body {
   border-bottom: 1px solid currentColor;
 }
 
+.admin__delete-position {
+  position: relative;
+	width: 0;
+	height: 0;
+	top: 0rem;
+	left: 85%;
+}
+
+.admin__delete-container {
+	position: absolute;
+	width: 4rem;
+	height: 4rem;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#d56f6f),
+    to(#b42828)
+  );
+  background-image: linear-gradient(to right bottom, #d56f6f, #b42828);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  -webkit-box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0.3rem 0.3rem 0.5rem rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.admin__delete {
+  height: 2rem;
+  width: 2rem;
+  margin-top: 0.8rem;
+}
+
 .card-container {
   max-width: 120rem;
   margin: 0 auto;
@@ -1087,7 +1120,9 @@ body {
   .admin__table {
     margin: 2rem auto;
   }
-  
+  .admin__product-add--container {
+    margin: 2rem 0 3rem 0;
+  }
 }
 
 @media only screen and (min-width: 767px) {
@@ -1181,5 +1216,8 @@ body {
   }
   .user-view__form-container__reviews {
     padding: 2rem 0;
+  }
+  .admin__delete-position {
+    left: 80%;
   }
 }

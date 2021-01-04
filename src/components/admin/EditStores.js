@@ -190,8 +190,8 @@ const EditStores = (props) => {
         <ModalHeader toggle={(event) => toggleDelete(event)}>
           Delete Store
         </ModalHeader>
-        <ModalBody>
-          <p>Are you sure? This can't be undonde</p>
+        <ModalBody style={{ textAlign: 'center' }}>
+          <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>Are you sure? This can't be undonde</p>
         </ModalBody>
         <ModalFooter>
           <button
