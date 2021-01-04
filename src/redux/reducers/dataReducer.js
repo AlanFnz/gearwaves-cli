@@ -6,6 +6,7 @@ import {
   SET_REVIEWS,
   SET_EXPERTS,
   UPDATE_REVIEW,
+  UPDATE_PRODUCTS,
   LOADING_UI,
   LOADING_DATA,
   CLEAR_PRODUCT,
@@ -69,6 +70,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+    case UPDATE_PRODUCTS:
+      index = state.products.findIndex(
+        (product) => product._id === action.payload._id
+      );
+      if (index > -1) {
+        state.products[index] = action.payload
+      } else {
+        state.products.push(action.payload);
+      }
+      return {
+        ...state,
+      }
     case CLEAR_PRODUCT:
       return {
         ...state,

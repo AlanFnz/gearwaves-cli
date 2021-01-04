@@ -17,3 +17,4 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const SET_EXPERTS = 'SET_EXPERTS';
 export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
+export const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";

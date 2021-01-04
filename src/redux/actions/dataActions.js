@@ -5,6 +5,7 @@ import {
   SET_REVIEWS,
   SET_EXPERTS,
   UPDATE_REVIEW,
+  UPDATE_PRODUCTS,
   LOADING_DATA,
   CLEAR_PRODUCT,
 } from '../types';
@@ -78,10 +79,12 @@ export const updateReview = (data) => (dispatch) => {
 };
 
 //TODO:
-// Update product
-export const updateProduct = (product, id) => async (dispatch) => {
-  console.log('update action');
-  // Update product in products array (Redux state)
+// Update products
+export const updateProducts = (data) => async (dispatch) => {
+  dispatch({
+    type: UPDATE_PRODUCTS,
+    payload: data,
+  });
 };
 
 // Get experts (users with role = technical || sales)

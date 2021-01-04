@@ -51,7 +51,7 @@ const Product = (props) => {
     ))
   );
 
-  const reviewsMarkup = isLoading ? (
+  const reviewsMarkup = props.data.product.reviews.length === 0 ? null : isLoading ? (
     <Spinner size="sm" type="grow" color="dark" />
   ) : (
     props.data.product.reviews &&
@@ -59,6 +59,11 @@ const Product = (props) => {
       <ReviewCard review={review} />
     ))
   );
+
+  const reviewsSection = props.data.product.reviews.length === 0 ? null : ( 
+  <section className="section-reviews">
+    <div className="reviews">{reviewsMarkup}</div>
+  </section> );
 
   let splittedDescription = isLoading
     ? null
@@ -93,7 +98,7 @@ const Product = (props) => {
     ));
 
   let pageMarkup =
-    !isLoading && !loading && props.data.product.images ? (
+    !isLoading && !loading && props.data.product.imageCover ? (
       <Fragment>
         <section className="section-header">
           <div className="header__hero">
@@ -108,23 +113,6 @@ const Product = (props) => {
             <h1 className="heading-product heading-primary">
               <span>{props.data.product.name}</span>
             </h1>
-            {/* <div className="heading-box__group">
-              <div className="heading-box__detail">
-                <svg className="heading-box__icon">
-                  <use xlink href="img/icons.svg#icon-map-pin"></use>
-                </svg>
-                <span className="heading-box__text"> Warrantly</span>
-              </div>
-              <div className="heading-box__detail">
-                <svg className="heading-box__icon">
-                  <use
-                    xlink
-                    href="http://localhost:8000/img/icons.svg#icon-map-pin"
-                  ></use>
-                </svg>
-                <span className="heading-box__text"> Made in</span>
-              </div>
-            </div> */}
           </div>
         </section>
         <Container>
@@ -179,9 +167,7 @@ const Product = (props) => {
         <section className="section-map">
           <Mapbox locations={props.data.product.locations} />
         </section>
-        <section className="section-reviews">
-          <div className="reviews">{reviewsMarkup}</div>
-        </section>
+        {reviewsSection}
         <section className="section-cta">
           <div className="cta">
             <Container>

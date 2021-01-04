@@ -9,13 +9,13 @@ import { showAlert } from '../../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { updateProduct } from '../../redux/actions/dataActions';
+import { updateProducts } from '../../redux/actions/dataActions';
 // Styles
 import '../../styles/ProductCard.css';
 import axios from '../../axios';
 
 const ProductCard = (props) => {
-  const { cleanSelected, updateProduct } = props;
+  const { cleanSelected, updateProducts } = props;
 
   const initialState = {
     isNew: true,
@@ -27,12 +27,14 @@ const ProductCard = (props) => {
     newImageLeft: null,
     newImageCenter: null,
     newImageRight: null,
+    experts: [],
+    locations: [],
   };
 
   const [state, setState] = useState(initialState);
 
   useEffect(() => {
-    if (props.data.product) {
+    if (Object.keys(props.data.product).length > 0) {
       let experts = [];
       props.data.product.experts.map((expert) => {
         return experts.push(expert._id);
@@ -40,6 +42,7 @@ const ProductCard = (props) => {
       setState((prevState) => ({
         ...prevState,
         isNew: false,
+        id: props.data.product._id,
         name: props.data.product.name,
         summary: props.data.product.summary,
         description: props.data.product.description,
@@ -75,7 +78,7 @@ const ProductCard = (props) => {
   };
 
   const handleCheckExperts = (event) => {
-    let expertsNew = state.experts;
+    let expertsNew = state.experts
     if (expertsNew.includes(event.target.dataset.id)) {
       let index = expertsNew.indexOf(event.target.dataset.id);
       expertsNew.splice(index, 1);
@@ -168,7 +171,7 @@ const ProductCard = (props) => {
     }));
   };
 
-  const saveImages = async () => {
+  const saveImages = async (id) => {
     const data = new FormData();
 
     const imagesIndex = [
@@ -185,11 +188,12 @@ const ProductCard = (props) => {
 
     const res = await axios({
       method: 'PATCH',
-      url: `/products/${props.data.product._id}`,
+      url: `/products/${state.id || id}`,
       data,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     if (res.data.status === 'success') {
+      updateProducts(res.data.data.data);
       return true;
     }
   };
@@ -208,14 +212,27 @@ const ProductCard = (props) => {
       locations: state.locations,
     };
 
-    const res = await axios({
-      method: 'PATCH',
-      url: `/products/${props.data.product._id}`,
-      data,
-    });
-    if (res.data.status === 'success') {
-      return true;
+    if (state.isNew) {
+      const res = await axios({
+        method: 'POST',
+        url: `/products/`,
+        data,
+      });
+      if (res.data.status === 'success') {
+        return res.data.data.data._id
+      }
+    } else {
+      const res = await axios({
+        method: 'PATCH',
+        url: `/products/${state.id}`,
+        data,
+      });
+      if (res.data.status === 'success') {
+        updateProducts(res.data.data.data);
+        return true;
+      }
     }
+
   };
 
   const save = async (event) => {
@@ -223,8 +240,9 @@ const ProductCard = (props) => {
     // Validation
     if (state.isNew && state.newImageCover === null)
       return showAlert('error', `Select a cover image`);
-    if (state.isNew && state.newImages.length < 3)
-      return showAlert('error', `Three product images besides the cover image`);
+    if (state.isNew)
+      if (state.newImageLeft === null || state.newImageCenter === null || state.newImageRight === null) 
+        return showAlert('error', `Select three product images besides the cover image`);
     if (
       !state.name.trim() ||
       !state.price.toString().trim() ||
@@ -235,7 +253,7 @@ const ProductCard = (props) => {
       !state.warrantly.toString().trim()
     )
       showAlert('error', `All fields are required. No empty spaces.`);
-    if (state.experts.length === 0)
+    if (!state.experts || state.experts.length === 0)
       return showAlert('error', `Select at least one expert`);
     if (state.locations.length === 0)
       return showAlert('error', `Select at least one store`);
@@ -253,13 +271,13 @@ const ProductCard = (props) => {
         state.newImageCenter ||
         state.newImageRight
       ) {
-        saveImagesResult = await saveImages();
+        saveImagesResult = await saveImages(saveDataResult);
       } else {
         saveImagesResult = true
       }
 
       if (saveDataResult && saveImagesResult) {
-        showAlert('success', `Product updated successfully`);
+        state.isNew ? showAlert('success', `Product created successfully`) : showAlert('success', `Product updated successfully`);
         window.setTimeout(() => {
           cleanSelected();
         }, 1500);
@@ -434,4 +452,4 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
-export default connect(mapStateToProps, { updateProduct })(ProductCard);
+export default connect(mapStateToProps, { updateProducts })(ProductCard);

@@ -87,6 +87,13 @@ body {
   text-align: left !important;
 }
 
+.center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+
 .line {
   margin: 6rem 0;
   width: 100%;
@@ -996,6 +1003,15 @@ body {
 
 .admin__table {
   font-size: 1.5rem;
+}
+
+.admin__product-name {
+  cursor: pointer;
+  margin: 0;
+}
+
+.admin__product-add--container {
+  margin-top: 3rem;
 }
 
 @media only screen and (max-width: 70em) and (min-width: 767px)  {

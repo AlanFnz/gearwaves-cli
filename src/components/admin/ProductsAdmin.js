@@ -18,7 +18,7 @@ const ProductsAdmin = (props) => {
   });
 
   const setSelected = (event) => {
-    const productSlug = props.data.products.filter(product => product._id === event.target.attributes[0].value)[0].slug;
+    const productSlug = props.data.products.filter(product => product._id === event.target.dataset.id)[0].slug;
     async function fetchData() {
       await getProduct(productSlug);
       setState({ 
@@ -27,6 +27,14 @@ const ProductsAdmin = (props) => {
     };
     fetchData(productSlug);
   };
+
+  const setAddNew = (event) => {
+    event.preventDefault();
+    console.log('add new product');
+    setState({ 
+      selected: 'new',
+    });
+  }
 
   const cleanSelected = () => {
     setState({ selected: '' })
@@ -42,7 +50,7 @@ const ProductsAdmin = (props) => {
 
   let productsMap = props.data.products.map((product) => (
     <tr key={product._id}>
-      <td data-id={product.id} onClick={setSelected}>{product.name}</td>
+      <td><p data-id={product.id} className="admin__product-name" onClick={setSelected}>{product.name}</p></td>
       <td>{product.stock}</td>
       <td>{product.price}</td>
       <td>{product.locations.length}</td>
@@ -64,6 +72,9 @@ const ProductsAdmin = (props) => {
         {productsMap}
       </tbody>
     </Table>   
+    <div className="center admin__product-add--container">
+      <button className="btn btn--small btn--green" onClick={setAddNew}>+</button>
+    </div>
     </div> : null;
  
   let markup;
