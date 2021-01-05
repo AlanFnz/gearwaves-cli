@@ -45,12 +45,12 @@ const ProductsAdmin = (props) => {
     async function fetchData() {
       await getProducts();
     }
-    if (!props.data.fetched) fetchData();
-  }, [getProducts, props.data.fetched])
+    if (!props.data.fetchedProducts) fetchData();
+  }, [getProducts, props.data.fetchedProducts])
 
   let productsMap = props.data.products.map((product) => (
     <tr key={product._id}>
-      <td><p data-id={product.id} className="admin__product-name" onClick={setSelected} style={{ textDecoration: 'underline' }}>{product.name}</p></td>
+      <td><p data-id={product.id} className="admin__item-name" onClick={setSelected} style={{ textDecoration: 'underline' }}>{product.name}</p></td>
       <td>{product.stock}</td>
       <td>{product.price}</td>
       <td>{product.locations.length}</td>
@@ -72,7 +72,7 @@ const ProductsAdmin = (props) => {
         {productsMap}
       </tbody>
     </Table>   
-    <div className="center admin__product-add--container">
+    <div className="center admin__item-add--container">
       <button className="btn btn--small btn--green" onClick={setAddNew}>+</button>
     </div>
     </div> : null;
@@ -80,7 +80,7 @@ const ProductsAdmin = (props) => {
   let markup;
   if (props.data.loading) {
     markup = <Spinner size="md" color="dark" />;
-  } else if (props.data.products <= 0) {
+  } else if (props.data.products && props.data.products.length <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else if (state.selected) {
     markup = <ProductCardAdmin cleanSelected={cleanSelected} />

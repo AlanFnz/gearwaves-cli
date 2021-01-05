@@ -15,8 +15,8 @@ const Home = props => {
     async function fetchData() {
       await getProducts();
     }
-    if (!props.data.fetched) fetchData();
-  }, [getProducts, props.data.fetched])
+    if (!props.data.fetchedProducts) fetchData();
+  }, [getProducts, props.data.fetchedProducts])
 
   let productsMap = props.data.products.map((product) => (
     <Col><ProductCard product={product} key={product._id} /></Col>

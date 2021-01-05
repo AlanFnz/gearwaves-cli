@@ -219,7 +219,7 @@ const EditStores = (props) => {
           <td>{store.name}</td>
           <td>
             <img
-              className="nav__icon"
+              className="nav__icon pointer"
               style={{ marginLeft: '6px' }}
               src={edit}
               alt="Edit Details"
@@ -228,7 +228,7 @@ const EditStores = (props) => {
           </td>
           <td>
             <img
-              className="nav__icon"
+              className="nav__icon pointer"
               style={{ marginLeft: '10px' }}
               src={trash}
               alt="Delete Store"

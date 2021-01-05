@@ -4,6 +4,7 @@ import {
   SET_GEAR,
   SET_REVIEWS,
   SET_EXPERTS,
+  SET_USERS,
   UPDATE_REVIEW,
   UPDATE_PRODUCTS,
   DELETE_PRODUCT,
@@ -20,6 +21,22 @@ export const getProducts = () => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SET_PRODUCTS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// Get all users
+export const getUsers = () => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get('/users')
+    .then((res) => {
+      dispatch({
+        type: SET_USERS,
         payload: res.data,
       });
     })

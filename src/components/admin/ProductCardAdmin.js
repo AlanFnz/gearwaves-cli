@@ -305,6 +305,7 @@ const ProductCard = (props) => {
           : showAlert('success', `Product updated successfully`);
         window.setTimeout(() => {
           cleanSelected();
+          window.scrollTo(0, 50);
         }, 1500);
       } else {
         showAlert('error', `Something went wrong! :(`);
@@ -318,6 +319,7 @@ const ProductCard = (props) => {
   const clean = async (event) => {
     event.preventDefault();
     cleanSelected();
+    window.scrollTo(0, 50);
   };
 
   const deleteAction = async () => {
@@ -332,6 +334,7 @@ const ProductCard = (props) => {
         toggleDeleteModal()
         window.setTimeout(() => {
           cleanSelected();
+          window.scrollTo(0, 50);
         }, 1500);
       }
     } catch(err) {
@@ -349,12 +352,14 @@ const ProductCard = (props) => {
     type = 'text',
     handle = handleFormChange
   ) => {
+    const Tag = type === 'textarea' ? 'textarea' : 'input';
+    const height = type === 'textarea' ? { height: '150px', wordWrap: 'break-word' }  : null;
     return (
       <div className="form__group">
         <label className="form__label" htmlFor={field}>
           {label}
         </label>
-        <input
+        <Tag
           id={field}
           className="form__input"
           type={type}
@@ -364,6 +369,8 @@ const ProductCard = (props) => {
           minLength={minLength}
           name={field}
           onChange={handle}
+          style={height}
+
         />
       </div>
     );

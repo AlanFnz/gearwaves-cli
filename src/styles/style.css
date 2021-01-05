@@ -94,6 +94,10 @@ body {
   text-align: center;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .line {
   margin: 6rem 0;
   width: 100%;
@@ -943,12 +947,29 @@ body {
   /* Pseudo element (a visible thing that isn't really in the DOM).
       Also needs -ms- */
 }
+.form__input-select {
+  padding-left: 1.25rem;
+  height: 50px;
+}
 .form__input:focus {
   outline: none;
   border-bottom: 3px solid #55c57a;
 }
+.form__input-select:focus {
+  outline: none;
+  border-bottom: 0px;
+}
 .form__input:focus:invalid {
   border-bottom: 3px solid #ff7730;
+}
+.form__input-readonly:focus {
+  -webkit-transition: all 0s;
+  transition: all 0s;
+  outline: none;
+  border-bottom: 0
+}
+.form__input-readonly:focus:invalid {
+  border-bottom: 0
 }
 .form__input::-webkit-input-placeholder {
   color: #bbb;
@@ -1038,12 +1059,12 @@ body {
   font-size: 1.5rem;
 }
 
-.admin__product-name {
+.admin__item-name {
   cursor: pointer;
   margin: 0;
 }
 
-.admin__product-add--container {
+.admin__item-add--container {
   margin-top: 3rem;
 }
 
@@ -1120,7 +1141,7 @@ body {
   .admin__table {
     margin: 2rem auto;
   }
-  .admin__product-add--container {
+  .admin__item-add--container {
     margin: 2rem 0 3rem 0;
   }
 }
