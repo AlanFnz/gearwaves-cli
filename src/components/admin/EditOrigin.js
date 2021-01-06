@@ -38,7 +38,7 @@ const EditOrigin = (props) => {
       lat: origin.coordinates[1],
       lon: origin.coordinates[0],
     });
-    toggle();
+    toggle(event, 'originModal');
   }
   
   const save = (event) => {
@@ -47,7 +47,7 @@ const EditOrigin = (props) => {
     if (state.lat < -90 || state.lat > 90) return showAlert('error', `Please insert valid latitude`);
     if (state.lon < -180 || state.lon > 180) return showAlert('error', `Please insert valid longitude`);
     handle(state);
-    toggle();
+    toggle(event, 'originModal');
   }
 
   useEffect(() => {
@@ -62,8 +62,8 @@ const EditOrigin = (props) => {
 
   return (
     <div>
-      <Modal isOpen={props.isOpen} toggle={props.toggle} centered={true}>
-        <ModalHeader toggle={props.toggle}>Edit Origin</ModalHeader>
+      <Modal isOpen={props.isOpen} toggle={(event) => toggle(event, 'originModal')} centered={true}>
+        <ModalHeader toggle={(event) => toggle(event, 'originModal')}>Edit Origin</ModalHeader>
         <ModalBody>
           <form className="form form-user-data">
             <div className="form__group">

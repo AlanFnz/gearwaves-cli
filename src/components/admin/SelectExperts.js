@@ -28,7 +28,7 @@ const SelectExperts = (props) => {
 
   const save = (event) => {
     if (props.expertsSelected.length === 0) return showAlert('error', `Select at least one expert`);
-    toggle(event);
+    toggle(event, 'expertsModal');
   };
 
   let tableMarkup = <div>
@@ -50,10 +50,10 @@ const SelectExperts = (props) => {
     <div>
       <Modal
         isOpen={props.isOpen}
-        toggle={props.toggle}
+        toggle={(event) => toggle(event, 'expertsModal')}
         centered={true}
       >
-        <ModalHeader toggle={props.toggle}>Select experts</ModalHeader>
+        <ModalHeader toggle={(event) => toggle(event, 'expertsModal')}>Select experts</ModalHeader>
         <ModalBody>
           {tableMarkup}
         </ModalBody>

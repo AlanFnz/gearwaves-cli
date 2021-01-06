@@ -156,35 +156,11 @@ const ProductCard = (props) => {
     }));
   };
 
-  const toggleExpertsModal = (event) => {
+  const toggle = (event, modal) => {
     if (event) event.preventDefault();
     setState((prevState) => ({
       ...prevState,
-      expertsModal: !state.expertsModal,
-    }));
-  };
-
-  const toggleStoresModal = (event) => {
-    event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      storesModal: !state.storesModal,
-    }));
-  };
-
-  const toggleOriginModal = (event) => {
-    if (event) event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      originModal: !state.originModal,
-    }));
-  };
-
-  const toggleDeleteModal = (event) => {
-    if (event) event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      deleteModal: !state.deleteModal,
+      [modal]: !state[modal],
     }));
   };
 
@@ -331,14 +307,14 @@ const ProductCard = (props) => {
       if (res.status === 204) {
         showAlert('success', `Product deleted successfully`)
         deleteProduct(props.data.product._id);
-        toggleDeleteModal()
+        toggle(null, 'deleteModal');
         window.setTimeout(() => {
           cleanSelected();
           window.scrollTo(0, 50);
         }, 1500);
       }
     } catch(err) {
-      toggleDeleteModal()
+      toggle(null, 'deleteModal');
       showAlert('error', `Something went wrong! :(`);
       console.log(err);
     }
@@ -407,7 +383,7 @@ const ProductCard = (props) => {
   let deleteDialog = (
     <Modal
       isOpen={state.deleteModal}
-      toggle={toggleDeleteModal}
+      toggle={(event) => toggle(event, 'deleteModal')}
       centered={true}
     >
       <ModalHeader toggle={props.toggle}>Delete Product</ModalHeader>
@@ -427,7 +403,7 @@ const ProductCard = (props) => {
         </button>{' '}
         <button
           className="btn btn--small btn--green btn--save-password"
-          onClick={toggleDeleteModal}
+          onClick={(event) => toggle(event, 'deleteModal')}
         >
           Cancel
         </button>{' '}
@@ -441,20 +417,20 @@ const ProductCard = (props) => {
     <Fragment>
       <SelectExperts
         isOpen={state.expertsModal}
-        toggle={toggleExpertsModal}
+        toggle={toggle}
         expertsSelected={state.experts}
         handle={handleCheckExperts}
       />
       <EditStores
         isOpen={state.storesModal}
-        toggle={toggleStoresModal}
+        toggle={toggle}
         storesSelected={state.locations}
         handleStoreChange={handleStoreChange}
         handleStoreDelete={handleStoreDelete}
       />
       <EditOrigin
         isOpen={state.originModal}
-        toggle={toggleOriginModal}
+        toggle={toggle}
         origin={state.madeIn}
         handle={handleOriginSave}
       />
@@ -463,7 +439,7 @@ const ProductCard = (props) => {
         <div className="admin__delete-position">
           <div
             className="admin__delete-container"
-            onClick={toggleDeleteModal}
+            onClick={(event) => toggle(event, 'deleteModal')}
           >
             <img src={trash} alt="Delete product" className="admin__delete" />
           </div>
@@ -494,7 +470,7 @@ const ProductCard = (props) => {
               <button
                 id="selectExperts"
                 className="form__upload"
-                onClick={toggleExpertsModal}
+                onClick={(event) => toggle(event, 'expertsModal')}
               />
               <label htmlFor="selectExperts">Select experts</label>
             </div>
@@ -502,7 +478,7 @@ const ProductCard = (props) => {
               <button
                 id="editStores"
                 className="form__upload"
-                onClick={toggleStoresModal}
+                onClick={(event) => toggle(event, 'storesModal')}
               />
               <label htmlFor="editStores">Edit stores</label>
             </div>
@@ -510,7 +486,7 @@ const ProductCard = (props) => {
               <button
                 id="editOrigin"
                 className="form__upload"
-                onClick={toggleOriginModal}
+                onClick={(event) => toggle(event, 'originModal')}
               />
               <label htmlFor="editOrigin">Edit origin</label>
             </div>

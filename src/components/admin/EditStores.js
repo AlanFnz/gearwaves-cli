@@ -259,14 +259,14 @@ const EditStores = (props) => {
       {addEditStoreMarkup}
       {deleteStoreMarkup}
       <div>
-        <Modal isOpen={props.isOpen} toggle={props.toggle} centered={true}>
-          <ModalHeader toggle={props.toggle}>Edit stores</ModalHeader>
+        <Modal isOpen={props.isOpen} toggle={(event) => toggle(event, 'storesModal')} centered={true}>
+          <ModalHeader toggle={(event) => toggle(event, 'storesModal')}>Edit stores</ModalHeader>
           <ModalBody>{tableMarkup}</ModalBody>
           <ModalFooter>
             <button className="btn btn--small btn--green" onClick={toggleAddEditModal}>
               New
             </button>{' '}
-            <button className="btn btn--small btn--green" onClick={toggle}>Done</button>{' '}
+            <button className="btn btn--small btn--green" onClick={(event) => toggle(event, 'storesModal')}>Done</button>{' '}
           </ModalFooter>
         </Modal>
       </div>
