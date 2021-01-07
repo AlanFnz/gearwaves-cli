@@ -19,7 +19,7 @@ const Home = props => {
   }, [getProducts, props.data.fetchedProducts])
 
   let productsMap = props.data.products.map((product) => (
-    <Col><ProductCard product={product} key={product._id} /></Col>
+    <Col key={product._id}><ProductCard product={product} key={product._id} /></Col>
   ));
 
   let productsMarkup = !loading ? productsMap : <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
