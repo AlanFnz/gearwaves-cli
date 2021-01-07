@@ -20,3 +20,4 @@ export const SET_USERS = 'SET_USERS';
 export const CLEAR_PRODUCT = 'CLEAR_PRODUCT';
 export const UPDATE_PRODUCTS = 'UPDATE_PRODUCTS';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const DELETE_REVIEW = 'DELETE_REVIEW';

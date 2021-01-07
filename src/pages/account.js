@@ -7,6 +7,7 @@ import MyGear from '../components/MyGear';
 import MyReviews from '../components/MyReviews';
 import ProductsAdmin from '../components/admin/ProductsAdmin';
 import UsersAdmin from '../components/admin/UsersAdmin';
+import ReviewsAdmin from '../components/admin/ReviewsAdmin';
 // Redux
 import { connect } from 'react-redux';
 // Icons
@@ -85,6 +86,12 @@ const Account = (props) => {
           return <UserProfile />;
         } else { 
           return <UsersAdmin />;
+        }
+      case 'reviews':
+        if(props.user.credentials.role !== 'admin'){
+          return <UserProfile />;
+        } else { 
+          return <ReviewsAdmin />;
         }
       default:
         return <UserProfile />;

@@ -9,22 +9,27 @@ import { showAlert } from '../util/alerts';
 import starEmpty from '../img/star-empty.svg';
 import starFull from '../img/star-full.svg';
 import edit from '../img/edit.svg';
+import trash from '../img/trash-white.svg';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { updateReview } from '../redux/actions/dataActions';
+import { updateReview, deleteReview } from '../redux/actions/dataActions';
 
 const ReviewCard = (props) => {
   const { review } = props;
   const [state, setState] = useState({
-    modal: false,
+    editModal: false,
+    deleteModal: false,
     review: '',
     rating: '',
   });
 
-  const toggle = () => setState({ modal: !state.modal });
-
-  const clearState = () => setState({modal: false, review: '', rating: ''})
+  const clearState = () => setState({
+    editModal: false, 
+    deleteModal: false, 
+    review: '', 
+    rating: ''
+  })
 
   useEffect(() => {
     if (!state.review && props.review.review)
@@ -35,6 +40,14 @@ const ReviewCard = (props) => {
       }));
   }, [props.review.rating, props.review.review, state.review]);
 
+  const toggle = (event, modal) => {
+    if (event) event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      [modal]: !state[modal],
+    }));
+  };
+
   const handleChange = (event) => {
     const { id, value } = event.target;
     setState((prevState) => ({
@@ -44,7 +57,7 @@ const ReviewCard = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    if (event) event.preventDefault();
     const { rating } = state;
     const rvw = state.review;
     if (rvw.length < 10) return showAlert('error', 'A review must have at least 10 characters');
@@ -67,6 +80,26 @@ const ReviewCard = (props) => {
     };
   };
 
+  const handleDelete = async (event) => {
+    console.log('delete review');
+    if (event) event.preventDefault();
+    try {
+      const res = await axios({
+        method: 'DELETE',
+        url: `/reviews/${review.id}`,
+      });
+      if (res.status === 204) {
+        props.deleteReview(review.id);
+        showAlert('success', 'Review deleted succesfully');
+        clearState();
+      };
+    } catch (err) {
+      console.log(err);
+      // showAlert('error', err.response.data.message);
+
+    };
+  }
+
   const array = [1, 2, 3, 4, 5];
   let starsMarkup = array.map((star) =>
     review.rating >= star ? (
@@ -79,8 +112,17 @@ const ReviewCard = (props) => {
   let editButton =
     review.user._id === props.user.credentials._id && props.edit ? (
       <div className="reviews__edit-position">
-        <div className="reviews__edit-container" onClick={toggle}>
+        <div className="reviews__edit-container" onClick={(event) => toggle(event, 'editModal')}>
           <img src={edit} alt="Edit" className="reviews__edit" />
+        </div>
+      </div>
+    ) : null;
+
+  let deleteButton =
+    props.user.credentials.role === 'admin' && props.delete ? (
+      <div className="reviews__edit-position">
+        <div className="reviews__edit-container" onClick={(event) => toggle(event, 'deleteModal')}>
+          <img src={trash} alt="Edit" className="reviews__edit" />
         </div>
       </div>
     ) : null;
@@ -94,8 +136,8 @@ const ReviewCard = (props) => {
     
   let reviewEditMarkup = (
     <div>
-      <Modal isOpen={state.modal} toggle={toggle} centered={true}>
-        <ModalHeader toggle={toggle}>{review.product.name}</ModalHeader>
+      <Modal isOpen={state.editModal} toggle={(event) => toggle('editModal')} centered={true}>
+        <ModalHeader toggle={(event) => toggle('editModal')}>{review.product.name}</ModalHeader>
         <ModalBody>
           <div className="form__group">
             <label className="form__label" htmlFor="name">
@@ -128,7 +170,7 @@ const ReviewCard = (props) => {
           </button>{' '}
           <button
             className="btn btn--small btn--green btn--save-password"
-            onClick={toggle}
+            onClick={(event) => toggle('editModal')}
           >
             Cancel
           </button>
@@ -137,12 +179,35 @@ const ReviewCard = (props) => {
     </div>
   );
 
+  let deleteReviewMarkup = (
+    <div>
+      <Modal isOpen={state.deleteModal} toggle={(event) => toggle(event, 'deleteModal')} centered={true}>
+        <ModalHeader toggle={(event) => toggle(event, 'deleteModal')}>Delete User</ModalHeader>
+        <ModalBody style={{ textAlign: 'center' }}>
+          <p style={{ fontSize: '1.5rem', fontWeight: '500' }}>
+            Are you sure? This can't be undonde
+          </p>
+        </ModalBody>
+        <ModalFooter>
+          <button className="btn btn--small btn--red" onClick={handleDelete}>
+            Delete
+          </button>{' '}
+          <button className="btn btn--small btn--green" onClick={(event) => toggle(event, 'deleteModal')}>
+            Cancel
+          </button>{' '}
+        </ModalFooter>
+      </Modal>
+    </div>
+  );
+
   return (
     <Fragment>
       {reviewEditMarkup}
+      {deleteReviewMarkup}
       <div
-        className={`reviews__card ${props.edit ? 'reviews__card-user' : null}`}
-      >
+        className={`reviews__card ${props.edit || props.delete ? 'reviews__card-user' : null}`}
+        >
+        {deleteButton}
         {editButton}
         <div className="reviews__avatar">
           <img

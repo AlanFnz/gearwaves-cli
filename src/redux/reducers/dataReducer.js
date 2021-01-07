@@ -9,6 +9,7 @@ import {
   UPDATE_REVIEW,
   UPDATE_PRODUCTS,
   DELETE_PRODUCT,
+  DELETE_REVIEW,
   LOADING_UI,
   LOADING_DATA,
   CLEAR_PRODUCT,
@@ -98,6 +99,14 @@ export default function (state = initialState, action) {
         (product) => product._id === action.payload
       );
       if (index !== -1) state.products.splice(index, 1);
+      return {
+        ...state
+      }
+    case DELETE_REVIEW:
+      index = state.reviews.findIndex(
+        (review) => review._id === action.payload
+      );
+      if (index !== -1) state.reviews.splice(index, 1);
       return {
         ...state
       }
