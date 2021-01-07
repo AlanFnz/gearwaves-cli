@@ -10,10 +10,12 @@ import starEmpty from '../img/star-empty.svg';
 import starFull from '../img/star-full.svg';
 import edit from '../img/edit.svg';
 import trash from '../img/trash-white.svg';
+// Functions
+import { calcAverageRating } from '../util/functions';
 // Redux
 import { connect } from 'react-redux';
 // Actions
-import { updateReview, deleteReview } from '../redux/actions/dataActions';
+import { updateReview, deleteReview, getProducts } from '../redux/actions/dataActions';
 
 const ReviewCard = (props) => {
   const { review } = props;
@@ -64,7 +66,7 @@ const ReviewCard = (props) => {
     try {
       const res = await axios({
         method: 'PATCH',
-        url: `/reviews/${review.id}`,
+        url: `/reviews/${review._id}`,
         data: {
           'review': rvw,
           'rating': rating
@@ -76,27 +78,42 @@ const ReviewCard = (props) => {
         clearState();
       };
     } catch (err) {
-      showAlert('error', err.response.data.message);
+      showAlert('error', 'Something went wrong! :(');
+      console.log(err);
     };
   };
 
   const handleDelete = async (event) => {
-    console.log('delete review');
     if (event) event.preventDefault();
     try {
-      const res = await axios({
+      const resDelete = await axios({
         method: 'DELETE',
-        url: `/reviews/${review.id}`,
+        url: `/reviews/${review._id}`,
       });
-      if (res.status === 204) {
-        props.deleteReview(review.id);
-        showAlert('success', 'Review deleted succesfully');
-        clearState();
+      if (resDelete.status === 204) {
+        let ratingsQuantity = props.data.product.ratingsQuantity - 1;
+        let ratingsAverage = calcAverageRating(props.data.reviews, review._id);
+        const resUpdateCount = await axios({
+          method: 'PATCH',
+          url: `/products/${props.data.product._id}`,
+          data: {
+            ratingsAverage,
+            ratingsQuantity,
+          }
+        });
+        if (resUpdateCount.data.status === 'success') {
+          props.deleteReview(review._id);
+          showAlert('success', 'Review deleted succesfully');
+          props.getProducts();
+          clearState();
+        } else {
+          showAlert('error', 'Something went wrong! :(');
+        };
+      } else {
+        showAlert('error', 'Something went wrong! :(');
       };
     } catch (err) {
       console.log(err);
-      // showAlert('error', err.response.data.message);
-
     };
   }
 
@@ -228,6 +245,7 @@ const ReviewCard = (props) => {
 };
 const mapStateToProps = (state) => ({
   user: state.user,
+  data: state.data,
 });
 
-export default connect(mapStateToProps, { updateReview })(ReviewCard);
+export default connect(mapStateToProps, { updateReview, deleteReview, getProducts })(ReviewCard);

@@ -10,13 +10,14 @@ import {
   getByUser,
   getReviewsByProduct,
   getProducts,
+  setProduct,
   clearProduct,
 } from '../../redux/actions/dataActions';
 // Functions
 import { noContentMarkup } from '../../util/functions';
 
 const ReviewsAdmin = (props) => {
-  const { getProducts, clearProduct, getReviewsByProduct, loading } = props;
+  const { getProducts, clearProduct, getReviewsByProduct, setProduct, loading } = props;
 
   const [state, setState] = useState({
     selected: '',
@@ -35,11 +36,13 @@ const ReviewsAdmin = (props) => {
       selected: product._id,
       productName: product.name,
     });
-    props.getReviewsByProduct(product._id);
+    getReviewsByProduct(product._id);
+    setProduct(product);
   };
 
   const cleanSelected = () => {
     setState({ selected: '', productName: '' });
+    clearProduct();
   };
 
   let productsMap = props.data.products.map((product) => (
@@ -125,4 +128,5 @@ export default connect(mapStateToProps, {
   getReviewsByProduct,
   getProducts,
   clearProduct,
+  setProduct
 })(ReviewsAdmin);

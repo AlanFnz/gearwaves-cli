@@ -19,3 +19,16 @@ export let noContentMarkup = (role) =>
         </div>
       </div>
     );
+
+export const calcAverageRating = (reviews, id) => {
+  let count = 0;
+  let totalRating = 0;
+  reviews.forEach((review) => {
+    if (review._id !== id ) {
+      count += 1;
+      totalRating = totalRating + review.rating;
+    }
+  })
+  let averageRating = totalRating / count;
+  return averageRating;
+}
