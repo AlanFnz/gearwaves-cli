@@ -10,7 +10,6 @@ import {
   UPDATE_PRODUCTS,
   DELETE_PRODUCT,
   DELETE_REVIEW,
-  LOADING_UI,
   LOADING_DATA,
   CLEAR_PRODUCT,
 } from '../types';

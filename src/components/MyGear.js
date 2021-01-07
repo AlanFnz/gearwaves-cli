@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 // Components
-import { Container, Row, Col, Spinner } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 // Redux
 import { connect } from 'react-redux';
 // Actions
@@ -27,7 +26,7 @@ const MyGear = (props) => {
 
   let markup;
   if (props.data.loading) {
-    markup = <Spinner size="md" color="dark" />;
+    markup = <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
   } else if (props.data.gear.length <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else {

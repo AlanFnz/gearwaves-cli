@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from '../../axios';
 // Components
 import {
@@ -10,7 +9,6 @@ import {
   ModalFooter,
   Spinner,
   Table,
-  Label,
   Input,
 } from 'reactstrap';
 import { showAlert } from '../../util/alerts';
@@ -299,7 +297,7 @@ const UsersAdmin = (props) => {
 
   let markup;
   if (props.data.loading) {
-    markup = <Spinner size="md" color="dark" />;
+    markup = <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
   } else if (props.data.users && props.data.users.length <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else {

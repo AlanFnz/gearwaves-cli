@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 // Components
 import SelectExperts from './SelectExperts';
 import EditStores from './EditStores';
@@ -412,7 +411,7 @@ const ProductCard = (props) => {
   );
 
   return props.data.loading ? (
-    <Spinner size="md" color="dark" />
+    <div className="spinner-container"><Spinner className="spinner" size="md" color="dark" /></div>
   ) : (
     <Fragment>
       <SelectExperts

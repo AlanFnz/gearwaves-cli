@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 // Components
-import { Container, Row, Col, Spinner, Table } from 'reactstrap';
+import { Container, Spinner, Table } from 'reactstrap';
 import ReviewCard from '../ReviewCard';
 // Redux
 import { connect } from 'react-redux';
@@ -106,7 +105,7 @@ const ReviewsAdmin = (props) => {
 
   let markup;
   if (props.data.loading) {
-    markup = <Spinner size="md" color="dark" />;
+    markup = <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
   } else if (props.data.products && props.data.products.length <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else if (state.selected) {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // Components
-import { Container, Row, Col, Spinner } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import UserProfile from '../components/UserProfile';
 import MyGear from '../components/MyGear';
 import MyReviews from '../components/MyReviews';

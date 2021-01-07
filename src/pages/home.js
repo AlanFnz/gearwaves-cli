@@ -22,7 +22,7 @@ const Home = props => {
     <Col><ProductCard product={product} key={product._id} /></Col>
   ));
 
-  let productsMarkup = !loading ? productsMap : <Spinner size='sm' type="grow" color="dark" />;
+  let productsMarkup = !loading ? productsMap : <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
 
   return (
     <main className="main">

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 // Components
-import { Modal, ModalHeader, ModalBody, ModalFooter, Spinner, Table, Label, Input } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Table, Label, Input } from 'reactstrap';
 import { showAlert } from '../../util/alerts';
 // Redux
 import { connect } from 'react-redux';

@@ -37,7 +37,7 @@ const Product = (props) => {
 
   const imagesIndex = ['imageLeft', 'imageCenter', 'imageRight'];
   let imagesMarkup = isLoading ? (
-    <Spinner size="sm" type="grow" color="dark" />
+    <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
   ) : (
     props.data.product.imageLeft &&
     imagesIndex.map((image, i) => (
@@ -52,7 +52,7 @@ const Product = (props) => {
   );
 
   let reviewsMarkup = isLoading ? (
-    <Spinner size="sm" type="grow" color="dark" />
+    <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
   ) : props.data.product.reviews &&
     props.data.product.reviews.length === 0 ? null : (
     props.data.product.reviews &&
@@ -204,7 +204,7 @@ const Product = (props) => {
         </section>
       </Fragment>
     ) : (
-      <Spinner size="sm" type="grow" color="dark" />
+      <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
     );
 
   return pageMarkup;

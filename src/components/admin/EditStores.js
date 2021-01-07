@@ -5,10 +5,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Spinner,
   Table,
-  Label,
-  Input,
 } from 'reactstrap';
 import { showAlert } from '../../util/alerts';
 // Icons

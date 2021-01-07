@@ -153,8 +153,8 @@ const ReviewCard = (props) => {
     
   let reviewEditMarkup = (
     <div>
-      <Modal isOpen={state.editModal} toggle={(event) => toggle('editModal')} centered={true}>
-        <ModalHeader toggle={(event) => toggle('editModal')}>{review.product.name}</ModalHeader>
+      <Modal isOpen={state.editModal} toggle={(event) => toggle(event, 'editModal')} centered={true}>
+        <ModalHeader toggle={(event) => toggle(event, 'editModal')}>{review.product.name}</ModalHeader>
         <ModalBody>
           <div className="form__group">
             <label className="form__label" htmlFor="name">
@@ -187,7 +187,7 @@ const ReviewCard = (props) => {
           </button>{' '}
           <button
             className="btn btn--small btn--green btn--save-password"
-            onClick={(event) => toggle('editModal')}
+            onClick={(event) => toggle(event, 'editModal')}
           >
             Cancel
           </button>

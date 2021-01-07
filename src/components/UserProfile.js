@@ -1,9 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from '../axios';
 // Components
-import { Container, Row, Col, Spinner } from 'reactstrap';
 import { showAlert } from '../util/alerts';
 // Redux
 import { connect } from 'react-redux';

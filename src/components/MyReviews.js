@@ -32,7 +32,7 @@ const MyReviews = (props) => {
 
   let markup;
   if (props.data.loading) {
-    markup = <div className="user-view__form-container"><Spinner size="md" color="dark" /></div>;
+    markup = <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>;
   } else if (props.data.reviews.length <= 0) {
     markup = noContentMarkup(props.user.credentials.role);
   } else {
