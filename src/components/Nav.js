@@ -34,7 +34,7 @@ const Nav = props => {
         console.log(err);
       };
     }
-    if(document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/)) {
+    if(localStorage.getItem("gearwjwt") !== null) {
       getUser()
     } else { loadingUser(false) }
   }, [setUser, loadingUser])
@@ -48,6 +48,7 @@ const Nav = props => {
       });
       if (res.data.status === 'success') {
         props.logoutUser()
+        window.localStorage.removeItem('gearwjwt');
         props.history.push('/');
       };
     } catch(err) {

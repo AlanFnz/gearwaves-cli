@@ -51,7 +51,6 @@ const Product = (props) => {
       url: `/purchases/checkout-session/${props.data.product._id}`,
     });
 
-    console.log(res);
     const session = res.data.session;
 
     const result = await stripe.redirectToCheckout({
