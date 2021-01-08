@@ -140,7 +140,7 @@ const Product = (props) => {
       </div>
     ));
 
-  let buyButton = props.data.user.credentials && props.data.user.credentials._id ? (
+  let buyButton = props.user.authenticated && props.user.credentials._id ? (
     <button
       className="btn btn--green btn--buy span-all-rows"
       id="purchase-product"
@@ -260,6 +260,7 @@ const Product = (props) => {
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { getProduct })(Product);
