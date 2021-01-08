@@ -1,13 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import axios from '../axios';
 // Components
 import { Container, Row, Col, Spinner } from 'reactstrap';
 import ReviewCard from '../components/ReviewCard';
 import Mapbox from '../components/Mapbox';
+import { showAlert } from '../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
 import { getProduct } from '../redux/actions/dataActions';
+//Stripe
+import { loadStripe } from '@stripe/stripe-js';
+const stripePromise = loadStripe('sk_test_51HgTAYCuHAMb5OfDRnyQJClSlPshyQcfqyu8EJmxYDkGOSJ0esek56y89iDj6xbhUMpm0IVD5HIlfKWZOmxARgx500IJOtdwFP');
 
 const Product = (props) => {
   const [isLoading, setLoading] = useState(true);
@@ -35,9 +41,32 @@ const Product = (props) => {
     );
   };
 
+  const handleBuy = async (event) => {
+    event.preventDefault();
+
+    const stripe = await stripePromise;
+
+    const res = await axios({
+      method: 'GET',
+      url: `/purchases/checkout-session/${props.data.product._id}`,
+    });
+
+    const session = await res.json();
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      showAlert('success', 'Something went wrong! :(');
+    }
+  };
+
   const imagesIndex = ['imageLeft', 'imageCenter', 'imageRight'];
   let imagesMarkup = isLoading ? (
-    <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
+    <div className="spinner--container">
+      <Spinner className="spinner" size="md" color="dark" />
+    </div>
   ) : (
     props.data.product.imageLeft &&
     imagesIndex.map((image, i) => (
@@ -52,7 +81,9 @@ const Product = (props) => {
   );
 
   let reviewsMarkup = isLoading ? (
-    <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
+    <div className="spinner--container">
+      <Spinner className="spinner" size="md" color="dark" />
+    </div>
   ) : props.data.product.reviews &&
     props.data.product.reviews.length === 0 ? null : (
     props.data.product.reviews &&
@@ -108,6 +139,27 @@ const Product = (props) => {
         <span>{expert.name}</span>
       </div>
     ));
+
+  let buyButton = props.data.user.credentials._id ? (
+    <button
+      className="btn btn--green btn--buy span-all-rows"
+      id="purchase-product"
+      data-product-id={props.data.product._id}
+      onClick={handleBuy}
+    >
+      Buy now!
+    </button>
+  ) : (
+    <Link to="/login">
+      <button
+        className="btn btn--green btn--buy span-all-rows"
+        id="purchase-product"
+        data-product-id={props.data.product._id}
+      >
+        Buy now!
+      </button>
+    </Link>
+  );
 
   let pageMarkup =
     !isLoading && !loading && props.data.product.imageCover ? (
@@ -204,7 +256,9 @@ const Product = (props) => {
         </section>
       </Fragment>
     ) : (
-      <div className="spinner--container"><Spinner className="spinner" size="md" color="dark" /></div>
+      <div className="spinner--container">
+        <Spinner className="spinner" size="md" color="dark" />
+      </div>
     );
 
   return pageMarkup;
