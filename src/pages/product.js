@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { getProduct } from '../redux/actions/dataActions';
 //Stripe
 import { loadStripe } from '@stripe/stripe-js';
-const stripePromise = loadStripe('sk_test_51HgTAYCuHAMb5OfDRnyQJClSlPshyQcfqyu8EJmxYDkGOSJ0esek56y89iDj6xbhUMpm0IVD5HIlfKWZOmxARgx500IJOtdwFP');
+const stripePromise = loadStripe('pk_test_51HgTAYCuHAMb5OfDjRRxP8Mjcpgu52Eb15C7oTtdwP3YhKl8f8t0xspX877HHTAWO6PopXbTklvWsaNxwqliv5io00hAE9PR3F');
 
 const Product = (props) => {
   const [isLoading, setLoading] = useState(true);
@@ -51,7 +51,8 @@ const Product = (props) => {
       url: `/purchases/checkout-session/${props.data.product._id}`,
     });
 
-    const session = await res.json();
+    console.log(res);
+    const session = res.data.session;
 
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
