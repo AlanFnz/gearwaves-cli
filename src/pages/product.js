@@ -140,7 +140,7 @@ const Product = (props) => {
       </div>
     ));
 
-  let buyButton = props.data.user.credentials._id ? (
+  let buyButton = props.data.user.credentials && props.data.user.credentials._id ? (
     <button
       className="btn btn--green btn--buy span-all-rows"
       id="purchase-product"
@@ -242,13 +242,7 @@ const Product = (props) => {
                   <p className="cta__text">Get the sound you dreamed of</p>
                 </Col>
                 <Col className="cta__content">
-                  <button
-                    className="btn btn--green btn--buy span-all-rows"
-                    id="purchase-product"
-                    data-product-id={props.data.product._id}
-                  >
-                    Buy now!
-                  </button>
+                  {buyButton}
                 </Col>
               </Row>
             </Container>
