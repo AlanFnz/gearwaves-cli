@@ -39,7 +39,6 @@ const Login = (props) => {
           email,
           password,
         },
-        withCredentials: true,
       });
 
       if (res.data.status === 'success') {
