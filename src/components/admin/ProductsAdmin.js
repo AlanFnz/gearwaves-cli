@@ -49,7 +49,7 @@ const ProductsAdmin = (props) => {
 
   let productsMap = props.data.products.map((product) => (
     <tr key={product._id}>
-      <td><p data-id={product.id} className="admin__item-name" onClick={setSelected} style={{ textDecoration: 'underline' }}>{product.name}</p></td>
+      <td><p data-id={product._id} className="admin__item-name" onClick={setSelected} style={{ textDecoration: 'underline' }}>{product.name}</p></td>
       <td>{product.stock}</td>
       <td>{product.price}</td>
       <td>{product.locations.length}</td>

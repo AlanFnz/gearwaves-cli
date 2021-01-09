@@ -32,3 +32,9 @@ export const calcAverageRating = (reviews, id) => {
   let averageRating = totalRating / count;
   return averageRating;
 }
+
+export const truncateString = (string, number) => {
+  return string.length > number
+    ? `${string.substring(0, number - 1)}...`
+    : string;
+};

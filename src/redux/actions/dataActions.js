@@ -5,6 +5,7 @@ import {
   SET_REVIEWS,
   SET_EXPERTS,
   SET_USERS,
+  SET_SALES,
   UPDATE_REVIEW,
   DELETE_REVIEW,
   UPDATE_PRODUCTS,
@@ -88,6 +89,21 @@ export const getByUser = (userId, item) => (dispatch) => {
       console.log(err);
     });
 };
+
+export const getSales = () => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get('/purchases')
+    .then((res) => {
+      dispatch({
+        type: SET_SALES,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 // Get reviews by products
 export const getReviewsByProduct = (productId) => (dispatch) => {

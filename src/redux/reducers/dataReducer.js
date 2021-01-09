@@ -6,6 +6,7 @@ import {
   SET_REVIEWS,
   SET_EXPERTS,
   SET_USERS,
+  SET_SALES,
   UPDATE_REVIEW,
   UPDATE_PRODUCTS,
   DELETE_PRODUCT,
@@ -18,12 +19,14 @@ const initialState = {
   products: [],
   product: {},
   gear: [],
+  sales: [],
   reviews: [],
   users: [],
   experts: [],
   loading: false,
   fetchedProducts: false,
   fetchedUsers: false,
+  fetchedSales: false,
   editProductOpen: false,
 };
 
@@ -41,6 +44,13 @@ export default function (state = initialState, action) {
         products: action.payload.data.data,
         loading: false,
         fetchedProducts: true,
+      };
+    case SET_SALES:
+      return {
+        ...state,
+        sales: action.payload.data.data,
+        loading: false,
+        fetchedSales: true,
       };
     case SET_USERS:
       return {

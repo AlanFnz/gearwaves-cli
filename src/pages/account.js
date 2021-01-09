@@ -8,6 +8,7 @@ import MyReviews from '../components/MyReviews';
 import ProductsAdmin from '../components/admin/ProductsAdmin';
 import UsersAdmin from '../components/admin/UsersAdmin';
 import ReviewsAdmin from '../components/admin/ReviewsAdmin';
+import Sales from '../components/admin/Sales';
 // Redux
 import { connect } from 'react-redux';
 // Icons
@@ -92,6 +93,12 @@ const Account = (props) => {
           return <UserProfile />;
         } else { 
           return <ReviewsAdmin />;
+        }
+      case 'sales':
+        if(props.user.credentials.role !== 'admin'){
+          return <UserProfile />;
+        } else { 
+          return <Sales />;
         }
       default:
         return <UserProfile />;
