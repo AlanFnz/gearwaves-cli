@@ -58,7 +58,7 @@ const Product = (props) => {
     });
 
     if (result.error) {
-      showAlert('success', 'Something went wrong! :(');
+      showAlert('error', 'Something went wrong! :(');
     }
   };
 

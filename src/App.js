@@ -26,6 +26,7 @@ function App() {
           <Nav />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/success' component={Home} />
             <Route exact path='/products' component={Home} />
             <Route exact path='/products/:slug' component={Product} />
             <Route exact path='/login' component={Login} />

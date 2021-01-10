@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 // Components
 import ProductCard from "../components/ProductCard";
 import { Container, Row, Col, Spinner } from 'reactstrap';
+import { showAlert } from '../util/alerts';
 // Redux
 import { connect } from 'react-redux';
 // Actions
@@ -16,7 +17,14 @@ const Home = props => {
       await getProducts();
     }
     if (!props.data.fetchedProducts) fetchData();
-  }, [getProducts, props.data.fetchedProducts])
+    if (props.match.path === '/success' && props.user.authenticated) {
+      console.log('success');
+      showAlert('success', `Success!, check "My Gear" section in your account`, 5);
+      window.setTimeout(() => {
+        props.history.push('/');
+      }, 1500);
+    }
+  }, [props.history, props.match.path, getProducts, props.data.fetchedProducts, props.user.authenticated])
 
   let productsMap = props.data.products.map((product) => (
     <Col key={product._id}><ProductCard product={product} key={product._id} /></Col>
@@ -39,6 +47,7 @@ const Home = props => {
 
 const mapStateToProps = state => ({
   data: state.data,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { getProducts })(Home);
