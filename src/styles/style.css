@@ -1075,6 +1075,16 @@ body {
   position: absolute;
 }
 
+.spinner-home {
+  height: 3.5rem;
+  width: 3.5rem;
+  margin-top: 9rem;
+  margin-left: 47.5%;
+  display: block;
+  position: absolute;
+
+}
+
 .spinner--container {
   position: relative;
   max-width: 100%;
