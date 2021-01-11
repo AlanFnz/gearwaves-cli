@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import '../styles/ProductCard.css';
+// Icons
+import store from '../img/store.svg';
+import marker from '../img/marker-green.svg';
 
 const ProductCard = (props) => {
   const { product } = props;
@@ -16,15 +18,11 @@ const ProductCard = (props) => {
       <div className="card__details">
         <p className="card__text">{product.summary}</p>
         <div className="card__data">
-          <svg className="card__icon">
-            <use xlink href="img/icons.svg#icon-map-flag"></use>
-          </svg>
+          <img src={marker} alt="Rating" className="card__icon" />
           <span>{`Made in ${product.madeIn.description}`}</span>
         </div>
         <div className="card__data">
-          <svg className="card__icon">
-            <use xlink href="img/icons.svg#icon-map-pin"></use>
-          </svg>
+          <img src={store} alt="Rating" className="card__icon" />
           <span>{`${product.locations.length} Stores`}</span>
         </div>
       </div>

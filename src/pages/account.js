@@ -23,7 +23,7 @@ const Account = (props) => {
   const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/);
 
   useEffect(() => {
-    !haveToken && !props.user.authenticated && props.history.push('/');
+    localStorage.getItem("gearwjwt") === null && !props.user.authenticated && props.history.push('/');
   }, [props.history, props.user.authenticated, haveToken]);
 
   const navItem = (link, text, icon, active) => (

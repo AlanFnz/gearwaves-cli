@@ -19,7 +19,7 @@ const MyReviews = (props) => {
 
   const reviewsMarkup =
     props.data.reviews &&
-    props.data.reviews.map((review, i) => review.user._id === props.user.credentials._id ? (<ReviewCard review={review} edit={true}/>) : (null));
+    props.data.reviews.map((review, i) => review.user._id === props.user.credentials._id ? (<ReviewCard key={review._id} review={review} edit={true}/>) : (null));
 
   let reviewsDisplayMarkup = (
     <div className="user-view__form-container user-view__form-container__reviews">

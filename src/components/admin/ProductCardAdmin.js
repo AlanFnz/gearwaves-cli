@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import axios from '../../axios';
 // Components
 import SelectExperts from './SelectExperts';
 import EditStores from './EditStores';
@@ -17,9 +18,6 @@ import { connect } from 'react-redux';
 import { updateProducts, deleteProduct } from '../../redux/actions/dataActions';
 // icons
 import trash from '../../img/trash-white.svg';
-// Styles
-import '../../styles/ProductCard.css';
-import axios from '../../axios';
 
 const ProductCard = (props) => {
   const { cleanSelected, updateProducts, deleteProduct } = props;
@@ -56,7 +54,7 @@ const ProductCard = (props) => {
         description: props.data.product.description,
         slug: props.data.product.slug,
         madeIn: props.data.product.madeIn,
-        warrantly: props.data.product.warrantly,
+        warranty: props.data.product.warranty,
         stock: props.data.product.stock,
         price: props.data.product.price,
         imageLeft: props.data.product.imageLeft,
@@ -198,7 +196,7 @@ const ProductCard = (props) => {
       price: state.price,
       slug: state.slug,
       stock: state.stock,
-      warrantly: state.warrantly,
+      warranty: state.warranty,
       madeIn: state.madeIn,
       experts: state.experts,
       locations: state.locations,
@@ -248,7 +246,7 @@ const ProductCard = (props) => {
       !state.stock.toString().trim() ||
       !state.description.trim() ||
       !state.summary.trim() ||
-      !state.warrantly.toString().trim()
+      !state.warranty.toString().trim()
     )
       showAlert('error', `All fields are required. No empty spaces.`);
     if (!state.experts || state.experts.length === 0)
@@ -450,7 +448,7 @@ const ProductCard = (props) => {
             {formFieldMarkup('summary', 'Summary', 100, 10)}
             {formFieldMarkup('description', 'Description', 800, 50, 'textarea')}
             {formFieldMarkup('slug', 'Slug', 50, 5)}
-            {formFieldMarkup('warrantly', 'Warrantly', null, null, 'number')}
+            {formFieldMarkup('warranty', 'Warranty', null, null, 'number')}
             {formFieldMarkup('stock', 'Stock', null, null, 'number')}
             {formFieldMarkup('price', 'Price', null, null, 'number')}
             <div className="line">&nbsp;</div>

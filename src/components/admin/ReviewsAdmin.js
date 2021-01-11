@@ -81,7 +81,7 @@ const ReviewsAdmin = (props) => {
   let reviewsMarkup = !loading
     ? props.data.reviews &&
       props.data.reviews.map((review, i) => (
-        <ReviewCard review={review} delete={true} />
+        <ReviewCard key={review._id} review={review} delete={true} />
       ))
     : null;
 

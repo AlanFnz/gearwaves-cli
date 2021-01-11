@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from '../axios';
-// Styles
-import '../styles/ReviewCard.css';
 // Components
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { showAlert } from '../util/alerts';
@@ -120,9 +118,9 @@ const ReviewCard = (props) => {
   const array = [1, 2, 3, 4, 5];
   let starsMarkup = array.map((star) =>
     review.rating >= star ? (
-      <img src={starFull} alt="Rating" className="reviews__star" />
+      <img key={star} src={starFull} alt="Rating" className="reviews__star" />
     ) : (
-      <img src={starEmpty} alt="Rating" className="reviews__star" />
+      <img key={star} src={starEmpty} alt="Rating" className="reviews__star" />
     )
   );
 
@@ -147,7 +145,7 @@ const ReviewCard = (props) => {
   let ratingOptions = () => {
     const values = [1, 2, 3, 4, 5];
     return values.map(value => {
-      return  <option value={value}>{value}</option>
+      return  <option key={value} value={value}>{value}</option>
     })
   }
     

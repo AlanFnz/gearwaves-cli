@@ -17,7 +17,7 @@ const MyGear = (props) => {
   }, [getByUser, userId]);
 
   let productsMap = props.data.gear.map((product) => (
-    <tr key={product.product._id}>
+    <tr key={product._id}>
       <td><p data-id={product.product._id}>{product.product.name}</p></td>
       <td>{product.createdAt.split('T')[0]}</td>
       <td>{product.price}</td>

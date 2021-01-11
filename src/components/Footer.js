@@ -1,12 +1,13 @@
 import React from 'react';
 // Styles
+import logo from '../img/logo-grey.png';
 import '../styles/Footer.css';
 
 const Footer = () => {
   return ( 
     <footer className='footer'>
       <div className='footer__logo'>
-        <img src='/img/logo-green.png' alt='Logo'></img>
+        <img src={logo} alt='Logo'></img>
       </div>
       <div>
         <ul className='footer__nav'>

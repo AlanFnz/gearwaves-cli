@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 // Actions
 import { setUser, logoutUser, getUserData, loadingUser } from '../redux/actions/userActions';
 // Styles
+import logo from '../img/logo-white.png';
 import '../styles/Nav.css';
 
 const Nav = props => {
@@ -87,7 +88,9 @@ const Nav = props => {
           </Col>
           <Col>
             <div className='header__logo'>
-              <img src='/img/logo-white.png' alt='logo' />
+              <Link to='/'>
+              <img src={logo} alt='logo' />
+              </Link>
             </div>
           </Col>
           <Col>

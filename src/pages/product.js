@@ -11,6 +11,11 @@ import { showAlert } from '../util/alerts';
 import { connect } from 'react-redux';
 // Actions
 import { getProduct } from '../redux/actions/dataActions';
+// Icons
+import star from '../img/star-full.svg';
+import marker from '../img/marker.svg';
+import warranty from '../img/warranty.svg';
+import stock from '../img/stock.svg';
 //Stripe
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51HgTAYCuHAMb5OfDjRRxP8Mjcpgu52Eb15C7oTtdwP3YhKl8f8t0xspX877HHTAWO6PopXbTklvWsaNxwqliv5io00hAE9PR3F');
@@ -32,9 +37,7 @@ const Product = (props) => {
   const overviewBox = (label, text, icon) => {
     return (
       <div className="overview-box__detail">
-        <svg className="overview-box__icon">
-          <use xlink href={`img/icons.svg#icon-${icon}`}></use>
-        </svg>
+        <img src={icon} alt={label} className="overview-box__icon" />
         <span className="overview-box__label">{label}</span>
         <span className="overview-box__text">{text}</span>
       </div>
@@ -88,7 +91,7 @@ const Product = (props) => {
     props.data.product.reviews.length === 0 ? null : (
     props.data.product.reviews &&
     props.data.product.reviews.map((review, i) => (
-      <ReviewCard review={review} />
+      <ReviewCard key={uuidv4()} review={review} />
     ))
   );
 
@@ -129,7 +132,7 @@ const Product = (props) => {
   let expertsMarkup =
     props.data.product.experts &&
     props.data.product.experts.map((expert) => (
-      <div className="overview-box__detail">
+      <div key={uuidv4()} className="overview-box__detail">
         <img
           className="overview-box__img"
           src={`${process.env.REACT_APP_API_URL}/img/users/${expert.photo}`}
@@ -193,18 +196,18 @@ const Product = (props) => {
                       {overviewBox(
                         'Stock',
                         `${props.data.product.stock} units`,
-                        'calendar'
+                        stock
                       )}
                       {overviewBox(
-                        'Warrantly',
-                        `${props.data.product.warrantly} months`,
-                        'trending-up'
+                        'Warranty',
+                        `${props.data.product.warranty} months`,
+                        warranty
                       )}
-                      {overviewBox('Made In', madeIn, 'people')}
+                      {overviewBox('Made In', madeIn, marker)}
                       {overviewBox(
                         'Rating',
                         `${props.data.product.ratingsAverage}/5`,
-                        'star'
+                        star
                       )}
                     </div>
                     <div className="overview-box__group">
