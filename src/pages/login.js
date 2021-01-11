@@ -41,8 +41,6 @@ const Login = (props) => {
         },
       });
 
-      console.log(res);
-
       if (res.data.status === 'success') {
         props.setUser(res.data);
         window.localStorage.setItem('gearwjwt', res.data.token)

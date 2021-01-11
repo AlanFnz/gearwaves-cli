@@ -179,6 +179,12 @@
   }
 }
 
+@media only screen and (max-width: 53em) {
+  .nav__el--username {
+    display: none !important;
+  }
+}
+
 @media only screen and (max-width: 45em) {
   .nav__user-img {
     height: 3rem;

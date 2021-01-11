@@ -10,6 +10,8 @@ import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 // Actions
 import { setUser, logoutUser, getUserData, loadingUser } from '../redux/actions/userActions';
+// Functions
+import { logout } from '../util/functions';
 // Styles
 import logo from '../img/logo-white.png';
 import '../styles/Nav.css';
@@ -40,30 +42,13 @@ const Nav = props => {
     } else { loadingUser(false) }
   }, [setUser, loadingUser])
 
-  const logout = async (event) => {
-    event.preventDefault();
-    try {
-      const res = await axios ({
-        method: 'GET',
-        url: '/users/logout',
-      });
-      if (res.data.status === 'success') {
-        props.logoutUser()
-        window.localStorage.removeItem('gearwjwt');
-        props.history.push('/');
-      };
-    } catch(err) {
-      showAlert('error', 'Error logging out! Please try again.')
-    }
-  }
-
   const loginSignupMarkup = 
     authenticated ? ( 
-      <Fragment className="nav__buttons-container">
-        <a className='nav__el nav__el--hide' href="/#" onClick={logout}>Logout</a>
+      <Fragment>
+        <a className='nav__el nav__el--hide' href="/#" onClick={(event) => logout(event, props)}>Logout</a>
         <Link className='nav__el' to='/account'>
           <img className='nav__user-img' src={`${process.env.REACT_APP_API_URL}/img/users/${credentials.photo}`} alt='User' />
-          <span className='d-none d-md-block'>{userName}</span>
+          <span className='nav__el--username d-none d-md-block'>{userName}</span>
         </Link>
       </Fragment>
     ) : (

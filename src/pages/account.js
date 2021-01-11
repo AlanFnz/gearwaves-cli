@@ -11,6 +11,10 @@ import ReviewsAdmin from '../components/admin/ReviewsAdmin';
 import Sales from '../components/admin/Sales';
 // Redux
 import { connect } from 'react-redux';
+// Actions
+import { logoutUser } from '../redux/actions/userActions';
+// Functions
+import { logout } from '../util/functions';
 // Icons
 import settings from '../img/settings.svg';
 import briefcase from '../img/briefcase.svg';
@@ -18,12 +22,15 @@ import money from '../img/money.svg';
 import product from '../img/product.svg';
 import starFull from '../img/star-full-white.svg';
 import users from '../img/users.svg';
+import logoutIcon from '../img/logout.svg';
 
 const Account = (props) => {
   const haveToken = document.cookie.match(/^(.*;)?\s*jwt\s*=\s*[^;]+(.*)?$/);
 
   useEffect(() => {
-    localStorage.getItem("gearwjwt") === null && !props.user.authenticated && props.history.push('/');
+    localStorage.getItem('gearwjwt') === null &&
+      !props.user.authenticated &&
+      props.history.push('/');
   }, [props.history, props.user.authenticated, haveToken]);
 
   const navItem = (link, text, icon, active) => (
@@ -41,29 +48,29 @@ const Account = (props) => {
         <h5 className="admin-nav__heading">Admin</h5>
         <ul className="side-nav">
           {navItem(
-                  '/account/products',
-                  'Products',
-                  product,
-                  props.match.params.section === 'products' ? true : false
-                )}
+            '/account/products',
+            'Products',
+            product,
+            props.match.params.section === 'products' ? true : false
+          )}
           {navItem(
-                  '/account/users',
-                  'Users',
-                  users,
-                  props.match.params.section === 'users' ? true : false
-                )}
+            '/account/users',
+            'Users',
+            users,
+            props.match.params.section === 'users' ? true : false
+          )}
           {navItem(
-                  '/account/reviews',
-                  'Reviews',
-                  starFull,
-                  props.match.params.section === 'reviews' ? true : false
-                )}
+            '/account/reviews',
+            'Reviews',
+            starFull,
+            props.match.params.section === 'reviews' ? true : false
+          )}
           {navItem(
-                  '/account/sales',
-                  'Sales',
-                  money,
-                  props.match.params.section === 'sales' ? true : false
-                )}
+            '/account/sales',
+            'Sales',
+            money,
+            props.match.params.section === 'sales' ? true : false
+          )}
         </ul>
       </div>
     ) : null;
@@ -77,27 +84,27 @@ const Account = (props) => {
       case 'myReviews':
         return <MyReviews />;
       case 'products':
-        if(props.user.credentials.role !== 'admin'){
+        if (props.user.credentials.role !== 'admin') {
           return <UserProfile />;
-        } else { 
+        } else {
           return <ProductsAdmin />;
         }
       case 'users':
-        if(props.user.credentials.role !== 'admin'){
+        if (props.user.credentials.role !== 'admin') {
           return <UserProfile />;
-        } else { 
+        } else {
           return <UsersAdmin />;
         }
       case 'reviews':
-        if(props.user.credentials.role !== 'admin'){
+        if (props.user.credentials.role !== 'admin') {
           return <UserProfile />;
-        } else { 
+        } else {
           return <ReviewsAdmin />;
         }
       case 'sales':
-        if(props.user.credentials.role !== 'admin'){
+        if (props.user.credentials.role !== 'admin') {
           return <UserProfile />;
-        } else { 
+        } else {
           return <Sales />;
         }
       default:
@@ -109,8 +116,16 @@ const Account = (props) => {
     <main className="main main-account">
       <Container className="user-view">
         <Row className="user-view__row">
-          <Col md="3" xs="12" className={`user-view__menu ${props.user.credentials.role === 'admin' ? 'user-view__menu-admin' : null}`}>
-            <nav >
+          <Col
+            md="3"
+            xs="12"
+            className={`user-view__menu ${
+              props.user.credentials.role === 'admin'
+                ? 'user-view__menu-admin'
+                : null
+            }`}
+          >
+            <nav>
               <ul className="side-nav">
                 {navItem(
                   '/account/settings',
@@ -134,11 +149,19 @@ const Account = (props) => {
                   starFull,
                   props.match.params.section === 'myReviews' ? true : false
                 )}
+                <li>
+                  <Link to="#" onClick={(event) => logout(event, props)}>
+                    <img className="nav__icon" src={logoutIcon} alt="Logout" />
+                    Logout
+                  </Link>
+                </li>
               </ul>
               {adminNav}
             </nav>
           </Col>
-          <Col md="9" xs="12" className="user-view__content">{pageRender()}</Col>
+          <Col md="9" xs="12" className="user-view__content">
+            {pageRender()}
+          </Col>
         </Row>
       </Container>
     </main>
@@ -149,4 +172,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Account);
+export default connect(mapStateToProps, { logoutUser })(Account);

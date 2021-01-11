@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { showAlert } from './alerts';
+import axios from '../axios';
 
 export let noContentMarkup = (role) => 
     role === 'admin' ? (
@@ -38,3 +40,21 @@ export const truncateString = (string, number) => {
     ? `${string.substring(0, number - 1)}...`
     : string;
 };
+
+export const logout = async (event, props) => {
+  event.preventDefault();
+  try {
+    const res = await axios ({
+      method: 'GET',
+      url: '/users/logout',
+    });
+    if (res.data.status === 'success') {
+      props.logoutUser()
+      window.localStorage.removeItem('gearwjwt');
+      props.history.push('/');
+      window.scrollTo(0, 50);
+    };
+  } catch(err) {
+    showAlert('error', 'Error logging out! Please try again.')
+  }
+}
