@@ -59,13 +59,13 @@
 }
 
 .nav__el--cta {
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 10rem;
   border: 1px solid currentColor !important;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-  -webkit-transform: translateY(-.5rem);
-  transform: translateY(-.5rem);
+  -webkit-transform: translateY(-0.5rem);
+  transform: translateY(-0.5rem);
 }
 
 .nav__el--cta:hover {
@@ -133,6 +133,10 @@
   margin-right: 1rem;
 }
 
+.nav__dropwdown {
+  display: none !important;
+}
+
 .header {
   background-color: #444;
   padding: 1rem 5rem 0rem 5rem;
@@ -183,7 +187,7 @@
 }
 
 @media only screen and (max-width: 40em) {
-  .header__logo img{
+  .header__logo img {
     height: 3rem;
   }
   .header {
@@ -191,10 +195,9 @@
     padding-top: 3.5rem;
     height: 6rem;
   }
-  .nav__el--signup{
+  .nav__el--signup {
     margin-right: 2rem;
   }
-
 }
 
 @media only screen and (max-width: 37.5em) {
@@ -217,8 +220,13 @@
   .nav--products {
     margin-bottom: 0;
   }
-  .nav__user-img{
-    display: none;
+  .nav__el--hide {
+    display: none !important;
+  }
+  .nav__user-img {
+    margin-left: 2rem;
+    height: 3.2rem;
+    width: 3.2rem;
   }
 }
 
@@ -228,13 +236,13 @@
     padding-top: 4.5rem;
     height: 4rem;
   }
-  .header__logo img{
-    height: 2.5rem;
+  .header__logo img {
+    height: 3rem;
   }
   .nav__el--cta {
-    padding: .2rem .8rem;
-    -webkit-transform: translateY(-.3rem);
-    transform: translateY(-.3rem);
+    padding: 0.2rem 0.8rem;
+    -webkit-transform: translateY(-0.3rem);
+    transform: translateY(-0.3rem);
   }
   .nav__el,
   .nav__el:link,
@@ -242,18 +250,24 @@
     font-size: 1.5rem;
     font-weight: 300;
   }
+  .nav__user-img {
+    margin-left: 7rem;
+  }
 }
 
 @media only screen and (max-width: 30em) {
   .nav__el--cta {
-    padding: .1rem .5rem;
-    -webkit-transform: translateY(-.15rem);
-    transform: translateY(-.15rem);
+    padding: 0.1rem 0.5rem;
+    -webkit-transform: translateY(-0.15rem);
+    transform: translateY(-0.15rem);
   }
+  /* .nav__user-img {
+    margin-left: 6rem;
+  } */
 }
 
-@media only screen and (max-width: 25em) {
-  .header__logo img{
-    height: 2rem;
+/* @media only screen and (max-width: 25em) {
+  .nav__user-img {
+    margin-left: 5rem;
   }
-}
+} */

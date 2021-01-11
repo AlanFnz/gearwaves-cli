@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from '../axios';
 // Components
 import { showAlert } from '../util/alerts';
-// Bootstrap
+// Reactstrap
 import { Container, Row, Col } from 'reactstrap';
 // Redux
 import { connect } from 'react-redux';
@@ -59,8 +59,8 @@ const Nav = props => {
 
   const loginSignupMarkup = 
     authenticated ? ( 
-      <Fragment>
-        <a className='nav__el' href="/#" onClick={logout}>Logout</a>
+      <Fragment className="nav__buttons-container">
+        <a className='nav__el nav__el--hide' href="/#" onClick={logout}>Logout</a>
         <Link className='nav__el' to='/account'>
           <img className='nav__user-img' src={`${process.env.REACT_APP_API_URL}/img/users/${credentials.photo}`} alt='User' />
           <span className='d-none d-md-block'>{userName}</span>
