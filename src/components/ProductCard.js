@@ -10,7 +10,7 @@ const ProductCard = (props) => {
     <div className="card">
       <div className="card__header">
         <div className="card__picture">
-          <div className="card__picture-overlay"> &nbsp;</div>
+          {/* <div className="card__picture-overlay"> &nbsp;</div> */}
           <img className="card__picture-img" src={`${process.env.REACT_APP_API_URL}/img/products/${product.imageCover}`} alt="product name"/>
         </div>
         <h3 className="heading-tertirary"><span>{product.name}</span></h3>
