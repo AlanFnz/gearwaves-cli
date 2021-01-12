@@ -52,7 +52,7 @@ export const logout = async (event, props) => {
       props.logoutUser()
       window.localStorage.removeItem('gearwjwt');
       props.history.push('/');
-      window.scrollTo(0, 50);
+      window.scrollTo(0, 0);
     };
   } catch(err) {
     showAlert('error', 'Error logging out! Please try again.')

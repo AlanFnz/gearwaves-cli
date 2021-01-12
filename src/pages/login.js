@@ -47,6 +47,7 @@ const Login = (props) => {
         showAlert('success', 'Logged in succesfully!');
         window.setTimeout(() => {
           props.history.push('/');
+          window.scrollTo(0, 0);
         }, 1500);
       };
     } catch (err) {
