@@ -48,6 +48,7 @@ const Signup = (props) => {
         showAlert('success', 'Account created succesfully!');
         window.setTimeout(() => {
           props.history.push('/');
+          window.scrollTo(0, 0);
         }, 1500);
       }
     } catch (err) {
@@ -68,7 +69,7 @@ const Signup = (props) => {
         <h2 className="heading-secondary ma-bt-lg">Create your account</h2>
         <form className="form__group" onKeyDown={onKeyDown}>
           <label className="form__label" htmlFor="name">
-            Name
+            User name
           </label>
           <input
             className="form__input"
