@@ -11,10 +11,9 @@ const Footer = () => {
       </div>
       <div>
         <ul className='footer__nav'>
-          <li><a href='/#'>Portfolio</a></li>
-          <li><a href='/#'>LinkedIn</a></li>
-          <li><a href='/#'>Mail</a></li>
-          <li><a href='/#'>Github</a></li>
+          <li><a href='https://alanfnz-portfolio.herokuapp.com/'>Portfolio</a></li>
+          <li><a href='https://www.linkedin.com/in/alanfernadez11/'>LinkedIn</a></li>
+          <li><a href='https://github.com/AlanFnz'>Github</a></li>
         </ul>
       </div>
       <p className='footer__copyright'>&copy; by Alan Fernandez. All rights reserved.</p>
